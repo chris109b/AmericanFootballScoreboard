@@ -11,7 +11,7 @@ An application to display, manage and distribute scoreboard data for American Fo
   * Test Plugin - A simple example for you to learn how to develop your own plugin.
 * Bonjour/Avahi/Zeroconf Service Anouncent - Allowing you to find the service easily.
 
-Techology
+## Techology
 
 * Python - https://en.wikipedia.org/wiki/Python_(programming_language)
 * HTML - https://en.wikipedia.org/wiki/HTML
@@ -19,7 +19,7 @@ Techology
 * JavaScript - https://en.wikipedia.org/wiki/JavaScript
 * Tornado - https://en.wikipedia.org/wiki/Tornado_(web_server)
 
-Other applications that can be usefull along with this software:
+## Other applications that can be usefull along with this software:
 
 * Zentri Discovery - https://play.google.com/store/apps/details?id=discovery.ack.me.ackme_discovery
 * Pea Finder - https://play.google.com/store/apps/details?id=com.ersteheimat.peafinder
