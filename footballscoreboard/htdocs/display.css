@@ -1,0 +1,130 @@
+html, body {
+   width: 100%;
+   padding: 0px;
+   margin: 0px;
+}
+
+body {
+    background-color: black;
+    color: white;
+    font-family: Courier, monospace;
+    font-weight: bold;
+    font-size: 10px;
+}
+
+a {
+   color: white;
+   text-decoration: none;
+   font-weight: normal;
+   cursor: pointer;
+   border: 0px;
+}
+
+div {
+   float: left;
+   position: relative;
+}
+
+img {
+   border-width: 0px;
+}
+
+div.Page {
+   margin: 0 auto;
+   float: none;
+   width: 100%;
+   height: 100%;
+   overflow: hidden;
+   background-color: black;
+   color: white;
+}
+
+div.ContentFrame {
+    width: 1920px;
+    margin-left: -960px;
+    left: 50%;
+}
+
+div.Content{
+    background-color: black;
+    width: 100%;
+    height: 1060px;
+    overflow: hidden;
+}
+
+div.Third {
+    width: 33.3%;
+    height: 1080px;
+}
+
+div#ThirdCenter {
+    border-left: 4px solid #FFF;
+    border-right: 4px solid #FFF;
+    margin-left: -4px;
+    margin-right:-4px;
+}
+
+div.TeamName {
+    width: 100%;
+    padding-top:2%;
+    height: 8%;
+    text-align:center;
+    font-size: 540%;
+}
+
+div.TeamScore {
+    width:100%;
+    height:40%;
+    text-align:center;
+    font-size: 3000%;
+}
+
+div.TeamIsInOffence {
+    height: 20%;
+    width: 100%;
+    text-align: center;
+}
+
+div.DefaultHeadline {
+    width: 100%;
+    padding-top:5.3%;
+    height: 6%;
+    font-size: 480%;
+    text-align:center;
+}
+
+div.Half {
+    width:50%;
+    height:100%;
+}
+
+div.DefaultNumber {
+    width: 100%;
+    padding-top:5%;
+    height: 18%;
+    font-size: 1400%;
+    text-align:center;
+}
+
+div.Time {
+    width: 100%;
+    padding-top:5%;
+    height: 31.6%;
+    font-size: 2000%;
+    text-align:center;
+}
+
+div.NetworkError {
+    font-size: 940%;
+    color: red;
+    position: absolute;
+    left: 50%;
+    top: 31%;
+    width: 640px;
+    margin-left: -320px;
+    text-align: center;
+}
+
+.HiddenObject {
+    display: none;
+}

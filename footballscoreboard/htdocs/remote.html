@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">  
+<head>
+    <meta charset="utf-8" />
+    <title>Scoreboard Web UI</title>
+    <!-- Technical content description -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="content-style-type" content="text/css"/>
+    <meta http-equiv="expires" content="0"/>
+    <meta charset="utf-8">
+    <!-- Configure Safari on iPhone -->
+    <meta name="viewport" content="width = device-width, initial-scale = 1.0, user-scalable = no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- Provide icons for several browsers -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <!-- Provide app icons for iPhone home screen -->
+    <link rel="apple-touch-icon-precomposed" href="favicons/57.png" />
+    <link rel="apple-touch-icon-precomposed" href="favicons/72.png" sizes="72x72" />
+    <link rel="apple-touch-icon-precomposed" href="favicons/114.png" sizes="114x114" />
+    <!-- Change iPhone status bar (default, black, black-translucent) -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <!-- Disable automatic phone number detection -->
+    <meta name="format-detection" content="telephone=no" />
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/remote.css">
+</head>  
+<body>
+<div class="Page">
+    <div class="ContentFrame">
+        <div class="Content">
+        <form  method="post" enctype="multipart/form-data">
+            <h1>Scoreboard</h1>
+            <div class="ContentLine">
+                <div class="HomeTeamContent">
+                    <div class="ContentHeadLine">
+                        <label id="HomeTeamName">Home</label>
+                    </div>
+                    <div class="ContentLine">
+                        <input class="TeamName" name="home_team" type="text" value="{{ home_team }}" autocorrect="off">
+                    </div>
+                </div>
+                <div class="GuestTeamContent">
+                    <div class="ContentHeadLine">
+                        <label id="GuestTeamName">Guest</label>
+                    </div>
+                    <div class="ContentLine">
+                        <input class="TeamName" name="guest_team" type="text" value="{{ guest_team }}" autocorrect="off">
+                    </div>
+                </div>
+            </div>
+            <div class="ContentLine">
+                <div class="HomeTeamContent">
+                    <div class="ContentHeadLine">
+                        <label id="HomeTeamScore">Score</label>
+                    </div>
+                    <div class="ContentLine">
+                        <input class="BigNumber" name="home_score" type="number" size="2" value="{{ home_score }}" onfocus="this.select();">
+                    </div>
+                </div>
+                <div class="GuestTeamContent">
+                    <div class="ContentHeadLine">
+                        <label id="GuestTeamScore">Score</label>
+                    </div>
+                    <div class="ContentLine">
+                        <input class="BigNumber" name="guest_score" type="number" size="2" value="{{ guest_score }}" onfocus="this.select();">
+                    </div>
+                </div>
+            </div>
+            <div class="GameContent">
+                <div class="ContentHeadLine">
+                    <label id="GameBall">Offence</label>
+                </div>
+                <div class="HomeTeamContent">
+                    <div class="ContentLine">
+                        <input class="OffenceMarker" type="radio" name="game_offencive_team" value="{{ offence_home_value }}"{% if game_offencive_team.value == offence_home_value %} checked{% end %}><span class="OffenceMarker"> </span>
+                    </div>
+                </div>
+                <div class="GuestTeamContent">
+                    <div class="ContentLine">
+                        <input class="OffenceMarker" type="radio" name="game_offencive_team" value="{{ offence_guest_value }}"{% if game_offencive_team.value == offence_guest_value %} checked{% end %}><span class="OffenceMarker"> </span>
+                    </div>
+                </div>
+                <div class="ContentLine">
+                    <div class="HomeTeamContent">
+                        <div class="ContentHeadLine">
+                            <label id="HomeTeamTimeoutsLeft">Timeouts left</label>
+                        </div>
+                        <div class="ContentLine">
+                            <input class="BigNumber" name="home_timeouts_left" type="number" size="2" value="{{ home_timeouts_left }}" onfocus="this.select();">
+                        </div>
+                    </div>
+                    <div class="GuestTeamContent">
+                        <div class="ContentHeadLine">
+                            <label id="GuestTeamTimeoutsLeft">Timeouts left</label>
+                        </div>
+                        <div class="ContentLine">
+                            <input class="BigNumber" name="guest_timeouts_left" type="number" size="2" value="{{ guest_timeouts_left }}" onfocus="this.select();">
+                        </div>
+                    </div>
+                </div>
+                <div class="ContentLine">
+                    <div class="ThirdLine">
+                        <div class="ContentHeadLine">
+                            <label id="GameDown">Down</label>
+                        </div>
+                        <div class="ContentLine">
+                            <input class="BigNumber" name="game_down" type="number" size="2" value="{{ game_down }}" onfocus="this.select();">
+                        </div>
+                    </div>
+                    <div class="ThirdLine">
+                        <div class="ContentHeadLine">
+                            <label id="GameYardsToGo">Ball on</label>
+                        </div>
+                        <div class="ContentLine">
+                            <input class="BigNumber" name="game_yards_to_go" type="number" size="2" value="{{ game_yards_to_go }}" onfocus="this.select();">
+                        </div>
+                    </div>
+                    <div class="ThirdLine">
+                        <div class="ContentHeadLine">
+                            <label id="GameBallOn">To go</label>
+                        </div>
+                        <div class="ContentLine">
+                            <input class="BigNumber" name="game_ball_on" type="number" size="2" value="{{ game_ball_on }}" onfocus="this.select();">
+                        </div>
+                    </div>
+                </div>
+                <div class="ContentHeadLine">
+                    <label id="GameClock">Play clock</label>
+                </div>
+                <div class="ContentLine">
+                    <input class="BigNumber" name="game_clock_minutes" type="number" size="2" value="{{ game_clock_minutes }}" onfocus="this.select();">:<input class="BigNumber" name="game_clock_seconds" type="number" size="2" value="{{ game_clock_seconds }}" onfocus="this.select();">
+                    <select name="game_phase" class="BigNumber">
+                        {% for game_phase_value in game_phase_list %}
+                            {% block game_phase_value %}
+                                <option value="{{ game_phase_value }}"{% if game_phase_value == game_phase.value %} selected{% end %}>{{ escape(game_phase_value) }}</option>
+                            {% end %}
+                        {% end %}
+                    </select>
+                </div>
+            </div>
+            <div class="ContentLine" style="line-height:200%;">
+                <input id="Submit" type="submit" name="submit" value="Apply">
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    inputs = document.getElementsByTagName('input');
+    for (index = 0; index < inputs.length; index++) {
+        (inputs[index]).blur();
+    }
+</script>
