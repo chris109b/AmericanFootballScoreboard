@@ -11,7 +11,7 @@ from tornado import gen
 from .scoreboard import Scoreboard
 
 
-class DefaultHandler(RequestHandler):
+class DefaultHandler(tornado.web.RequestHandler):
 
     ENCODING = "utf-8"
     HT_DOCUMENT_PATH = "htdocs"
@@ -58,8 +58,8 @@ class DefaultHandler(RequestHandler):
         file_path = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), file_path))
         try:
             if mime_type is None:
-                url = urllib.pathname2url(file_path)
-                mime_type, encoding = mimetypes.guess_type(url)
+                file_url = urllib.pathname2url(file_path)
+                mime_type, encoding = mimetypes.guess_type(file_url)
             if mime_type is None:
                 mime_type = "application/octet-stream"
             f = open(file_path, mode='rb')
@@ -139,6 +139,7 @@ class DefaultHandler(RequestHandler):
     @asynchronous
     def post(self, *args, **kwargs):
         arguments = self.request.body_arguments
+        scoreboard = self.__webserver.get_scoreboard()
         try:
             # Home teams
             home_team = arguments['home_team'][0].decode(DefaultHandler.ENCODING)
@@ -159,7 +160,6 @@ class DefaultHandler(RequestHandler):
             game_yards_to_go = int(arguments['game_yards_to_go'][0].decode(DefaultHandler.ENCODING))
             game_ball_on = int(arguments['game_ball_on'][0].decode(DefaultHandler.ENCODING))
             # Apply changes to scoreboard
-            scoreboard = self.__webserver.get_scoreboard()
             # Home team
             scoreboard.set(Scoreboard.KEY_HOME_TEAM, home_team)
             scoreboard.set(Scoreboard.KEY_HOME_SCORE, home_score)
@@ -178,10 +178,10 @@ class DefaultHandler(RequestHandler):
             # Clock
             scoreboard.set(Scoreboard.KEY_GAME_CLOCK_MIN, game_clock_minutes)
             scoreboard.set(Scoreboard.KEY_GAME_CLOCK_SEC, game_clock_seconds)
-        except ValueError as e:
+        except ValueError:
             self.send_common_error()
             return
-        except TypeError as e:
+        except TypeError:
             self.send_common_error()
             return
         finally:

@@ -4,8 +4,8 @@ import sys
 import footballscoreboard
 
 if __name__ == "__main__":
+    app = footballscoreboard.App()
     try:
-        app = footballscoreboard.App()
         app.load_plugins(sys.argv[1:])
         app.run()
     except (KeyboardInterrupt, SystemExit):

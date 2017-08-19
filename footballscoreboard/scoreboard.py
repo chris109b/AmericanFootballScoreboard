@@ -2,8 +2,8 @@
 
 # Python standard library imports
 from enum import Enum
-# Imports from external modules
 import json
+# Imports from external modules
 # Internal modules import
 
 

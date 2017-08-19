@@ -8,7 +8,6 @@ import netifaces
 import zeroconf
 
 
-
 class ServiceManager(object):
 
     def __init__(self):

@@ -1,5 +1,4 @@
 zeroconf
 tornado
 netifaces
-zeroconf
 cairosvg

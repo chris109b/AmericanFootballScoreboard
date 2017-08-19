@@ -40,5 +40,3 @@ class Plugin:
 
     def register(self):
         pass
-
-

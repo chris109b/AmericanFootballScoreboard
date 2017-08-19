@@ -7,7 +7,7 @@ html, body {
 body {
     background-color: black;
     color: white;
-    font-family: Courier, monospace;
+    font-family: "Courier New", Courier, "Lucida Console", Monaco, monospace;
     font-weight: bold;
     font-size: 10px;
 }

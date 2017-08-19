@@ -1,3 +1,4 @@
+// Class Page - One singe instance of it represents the active part of the page.
 function Page() {
     this.updateCounter = 0;
     this.websocket = null;

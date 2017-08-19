@@ -99,9 +99,9 @@ div.ThirdLine {
 }
 
 input.TeamName {
-    border: 2px solid rgba(0,0,0,0);
-    border-bottom: 2px solid rgba(255,255,255,1.0);
-    background-color: rgba(0,0,0,0);
+    border: 2px solid black;
+    border-bottom: 2px solid white;
+    background-color: black;
     color: white;
     padding: 4px 0px;
     margin: 8px 0px;
@@ -111,8 +111,8 @@ input.TeamName {
 
 select.BigNumber,
 input.BigNumber{
-    border: 2px solid rgba(255,255,255,1.0);
-    background-color: rgba(0,0,0,0);
+    border: 2px solid white;
+    background-color: black;
     color: white;
     padding: 8px;
     margin: 8px;
@@ -129,10 +129,9 @@ input.BigNumber{
     text-align: right;
 }
 
-
 #Submit {
-    border: 2px solid rgba(255,255,255,1.0);
-    background-color: #000000;
+    border: 2px solid white;
+    background-color: black;
     color: white;
     padding: 8px;
     margin: 8px;
@@ -141,7 +140,6 @@ input.BigNumber{
     margin-top: 20px;
     border-radius: 10px;
 }
-
 
 input.OffenceMarker, span.OffenceMarker {
     width: 40px;
@@ -167,61 +165,6 @@ span.OffenceMarker {
     border: 3px solid white;
 }
 
-
 input.OffenceMarker:checked + span.OffenceMarker {
     opacity: 1.0;
 }
-
-/*
-https://www.webdesignerdepot.com/2013/03/how-to-make-your-contact-forms-mobile-friendly/
-
-input[type=text], input[type=url], input[type=email], input[type=password], input[type=tel] {
-  -webkit-appearance: none; -moz-appearance: none;
-  display: block;
-  margin: 0;
-  width: 100%; height: 40px;
-  line-height: 40px; font-size: 17px;
-  border: 1px solid #bbb;
-}
-
-input[type=checkbox] {
- width: 44px; height: 44px;
- -webkit-border-radius: 22px; -moz-border-radius: 22px; border-radius: 22px;
- border: 1px solid #bbb;
-}
-
-button[type=submit] {
- -webkit-appearance: none; -moz-appearance: none;
- display: block;
- margin: 1.5em 0;
- font-size: 1em; line-height: 2.5em;
- color: #333;
- font-weight: bold;
- height: 2.5em; width: 100%;
- background: #fdfdfd; background: -moz-linear-gradient(top, #fdfdfd 0%, #bebebe 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fdfdfd), color-stop(100%,#bebebe)); background: -webkit-linear-gradient(top, #fdfdfd 0%,#bebebe 100%); background: -o-linear-gradient(top, #fdfdfd 0%,#bebebe 100%); background: -ms-linear-gradient(top, #fdfdfd 0%,#bebebe 100%); background: linear-gradient(to bottom, #fdfdfd 0%,#bebebe 100%);
- border: 1px solid #bbb;
- -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px;
-}
-
-input[type=range] {
- width: 100%;
-}
-input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 44px; height: 44px;
-  background: #fdfdfd; background: -moz-linear-gradient(top, #fdfdfd 0%, #bebebe 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fdfdfd), color-stop(100%,#bebebe)); background: -webkit-linear-gradient(top, #fdfdfd 0%,#bebebe 100%); background: -o-linear-gradient(top, #fdfdfd 0%,#bebebe 100%); background: -ms-linear-gradient(top, #fdfdfd 0%,#bebebe 100%); background: linear-gradient(to bottom, #fdfdfd 0%,#bebebe 100%);
-  border: 1px solid #bbb;
-  -webkit-border-radius: 22px; -moz-border-radius: 22px; border-radius: 22px;
-}
-
-<label for="website">Website:</label> <input type="url" name="website" placeholder="www.yourwebsite.com" />
-
-<label for="tel">Tel:</label> <input type="tel" name="tel" placeholder="Your telephone number" />
-
-<label for="email">Email:</label> <input type="email" name="email" placeholder="you@yourwebsite.com" />
-
-<label for="time">Time:</label> <input type="time" name="time" placeholder="9:00 AM" />
-
-<label for="date">Date:</label> <input type="date" name="date" placeholder="DD/MM/YYYY" />
-
-*/

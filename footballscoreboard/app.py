@@ -29,7 +29,7 @@ class App:
                 try:
                     plugin_args_list = plugin_args_string.split(";")
                 except ValueError:
-                    plugin_args_list = [ plugin_args_string ]
+                    plugin_args_list = [plugin_args_string]
             plugin = PluginRegistry.load_plugin(plugin_name, plugin_args_list)
             self.__scoreboard.add_plugin(plugin)
 

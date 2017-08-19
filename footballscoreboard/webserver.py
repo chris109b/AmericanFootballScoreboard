@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 # Imports from external modules
-import tornado
+import tornado.web
+import tornado.ioloop
 # Internal modules import
 from .servicemanager import ServiceManager
 from .webhandler import DefaultHandler
