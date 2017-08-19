@@ -24,3 +24,11 @@ An application to display, manage and distribute scoreboard data for American Fo
 
 * Zentri Discovery - https://play.google.com/store/apps/details?id=discovery.ack.me.ackme_discovery
 * Pea Finder - https://play.google.com/store/apps/details?id=com.ersteheimat.peafinder
+
+## Installation on Microsoft Windows
+
+* You need to install Python 3.x. You can download it here: https://www.python.org/
+* You need to install the Python packages listet in "requirements.txt", here is how you do it: https://docs.python.org/3/installing/index.html
+* For some of the packages a compiler is needed for installation: http://landinghub.visualstudio.com/visual-cpp-build-tools
+* If you want to keep on track with the latest development install Git and clone the repsitory: https://git-scm.com/downloads
+* If you want to be able to alter the code yourself Notepad++ is a nice editor to do so: https://notepad-plus-plus.org/

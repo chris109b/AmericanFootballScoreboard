@@ -39,7 +39,10 @@ class ServiceManager(object):
             if ip4_address != '127.0.0.1':
                 self.__ip4_address_list.append(ip4_address)
                 uri = "http://{0}:{1}/".format(ip4_address, self.__port)
-                subprocess.run(['qrencode', '--type=UTF8', '--output=-', uri])
+                try:
+                    subprocess.run(['qrencode', '--type=UTF8', '--output=-', uri])
+                except FileNotFoundError:
+                    print("Error: Command not found: qrencode")
                 print(uri)
 
     def get_port(self):
