@@ -33,8 +33,6 @@ div.Page {
    margin: 0 auto;
    float: none;
    width: 100%;
-   height: 100%;
-   overflow: hidden;
    background-color: black;
    color: white;
 }
@@ -127,4 +125,60 @@ div.NetworkError {
 
 .HiddenObject {
     display: none;
+}
+
+@media screen {
+    /* 640 x 360 */
+    div.ContentFrame {
+        transform: translate(0, -360px) scale(0.333);
+    }
+}
+
+@media screen and (min-width: 940px) and (min-height: 520px) {
+    /* 960 x 540 */
+    div.ContentFrame {
+        transform: translate(0, -270px) scale(0.500);
+    }
+}
+
+@media screen and (min-width: 1004px) and (min-height: 546px) {
+/* 1024 x 576 */
+div.ContentFrame {
+    transform: translate(0, -252px) scale(0.533);
+}
+}
+
+@media screen and (min-width: 1260px) and (min-height: 700px) {
+/* 1280 x 720 */
+div.ContentFrame {
+    transform: translate(0, -178px) scale(0.666);
+}
+}
+
+@media screen and (min-width: 1346px) and (min-height: 748px) {
+    /* 1366x768 */
+    div.ContentFrame {
+        transform: translate(0, -156px) scale(0.711);
+    }
+}
+
+@media screen and (min-width: 1900px) and (min-height: 1060px) {
+    /* 1920x1080 */
+    div.ContentFrame {
+        transform: translate(0, 0) scale(1.000);
+    }
+}
+
+@media screen and (min-width: 2540px) and (min-height: 1420px) {
+    /* 2560x1440 */
+    div.ContentFrame {
+        transform: translate(0, 180px) scale(1.333);
+    }
+}
+
+@media screen and (min-width: 3820px) and (min-height: 2140px) {
+    /* 3840x2160 */
+    div.ContentFrame {
+        transform: translate(0, 540px) scale(2.000);
+    }
 }

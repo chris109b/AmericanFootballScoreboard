@@ -7,7 +7,7 @@ Key features
 ------------
 
 - Remote Control Interface - A simple web interface to change the information shown on the board (optimized for smart phones and tablets).
-- Display Interface - A simple web site, showing a full featured scoreboard fullscreen on a Full HD display (1920x1080).
+- Display Interface - A simple web site, showing a full featured scoreboard on almost any screen (640x360 - 3840x2160 pixel size).
 - Plugins - To share data with other applications or devices.
   - OBS Studio Plugin - Writes data to separate text files within one folder. Those files can be used to display the information within an video live stream created with OBS Studio.
   - Logfile Plugin - Writes data to log file with time stamps to document the course of the game and help with writing statistics.
