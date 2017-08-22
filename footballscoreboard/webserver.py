@@ -4,7 +4,7 @@
 import tornado.web
 import tornado.ioloop
 # Internal modules import
-from .servicemanager import ServiceManager
+from .zeroconfserviceregistration import ZeroConfServiceRegistration
 from .webhandler import DefaultHandler
 from .websockethandler import WebSocketHandler
 
@@ -14,7 +14,7 @@ class Webserver(object):
     def __init__(self, scoreboard, ssl_cert_path):
         # Application info
         self.__vendor_name = 'Christian Beuschel'
-        self.__product_name = 'FootballScoreboard'
+        self.__product_name = 'American Football Scoreboard'
         self.__version_string = '0.1'
         # Server configuration
         self.__ssl_cert_path = ssl_cert_path
@@ -32,16 +32,18 @@ class Webserver(object):
 
     def start(self):
         # Publishing services
-        self.__service_manager = ServiceManager()
-        self.__service_manager.start_service()
+        self.__service_manager = ZeroConfServiceRegistration()
+        port = self.__service_manager.register_service(ZeroConfServiceRegistration.ServiceType.HTTP,
+                                                       self.__product_name)
+        self.__service_manager.print_service_urls()
         # Executing server
         handlers = [(r'/websocket', WebSocketHandler, dict(webserver=self)),
                     (r'.*', DefaultHandler, dict(webserver=self))]
         self.__web_service = tornado.web.Application(handlers)
-        self.__web_service.listen(self.__service_manager.get_port())
+        self.__web_service.listen(port)
         tornado.ioloop.IOLoop.instance().start()
 
     def stop(self):
         tornado.ioloop.IOLoop.current().stop()
         self.__web_service = None
-        self.__service_manager.stop_service()
+        self.__service_manager.stop()

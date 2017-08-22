@@ -13,16 +13,16 @@ class TestPlugin(Plugin):
 
     def __init__(self, args):
         super().__init__()
+        print("Initializing {0} with arguments:".format(TestPlugin.NAME))
+        print(args)
 
     def start(self, scoreboard):
-        print("Test Plugin started")
-        pass
+        print("{0} started".format(TestPlugin.NAME))
 
     @classmethod
     def print_entries(cls, entry_list):
         for entry in entry_list:
             print("{0} = {1}".format(entry.key, (entry.value.value if isinstance(entry.value, Enum) else entry.value)))
-
 
     def update(self, scoreboard):
         print("================================================================================")
@@ -33,13 +33,12 @@ class TestPlugin(Plugin):
         self.print_entries(scoreboard.get_changed_entries())
 
     def stop(self, scoreboard):
-        print("Test Plugin stopped")
+        print("{0} stopped".format(TestPlugin.NAME))
         pass
 
     @classmethod
     def print_manual(cls):
-        print("Test Plugin Manual")
-        pass
+        print("{0} Users Manual".format(TestPlugin.NAME))
 
     @classmethod
     def register(cls):

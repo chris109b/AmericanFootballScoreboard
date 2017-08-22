@@ -98,14 +98,6 @@ class DefaultHandler(tornado.web.RequestHandler):
     def send_display_json_data(self, client_update_count):
         scoreboard = self.__webserver.get_scoreboard()
         json_data = scoreboard.get_json_string()
-        print(json_data)
-        current_update_count = scoreboard.get_update_count()
-        if client_update_count == current_update_count:
-            yield gen.Task(IOLoop.instance().add_timeout, time.time() + 5)
-        #    delay = 21.0
-        #    notification_center = NotificationCenter.shared_instance()
-        #    notification_center.wait_once_for_event_with_timeout(Notification.NOTIFY_SCOREBOARD_UPDATE.value, delay)
-        json_data = scoreboard.get_json_string()
         self.set_header("Content-Type", "application/json")
         self.write(json_data)
         self.finish()
@@ -116,7 +108,6 @@ class DefaultHandler(tornado.web.RequestHandler):
             path = "/index.html"
         
         if path == "/display.json":
-            print("/display.json")
             update_count = int(self.request.query_arguments['count'][0])
             self.send_display_json_data(update_count)
             return
