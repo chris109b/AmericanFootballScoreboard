@@ -7,15 +7,12 @@ import tornado.ioloop
 from .zeroconfserviceregistration import ZeroConfServiceRegistration
 from .webhandler import DefaultHandler
 from .websockethandler import WebSocketHandler
+from .core import Core
 
 
 class Webserver(object):
 
     def __init__(self, scoreboard, ssl_cert_path):
-        # Application info
-        self.__vendor_name = 'Christian Beuschel'
-        self.__product_name = 'American Football Scoreboard'
-        self.__version_string = '0.1'
         # Server configuration
         self.__ssl_cert_path = ssl_cert_path
         # Other parts of the application
@@ -34,7 +31,8 @@ class Webserver(object):
         # Publishing services
         self.__service_manager = ZeroConfServiceRegistration()
         port = self.__service_manager.register_service(ZeroConfServiceRegistration.ServiceType.HTTP,
-                                                       self.__product_name)
+                                                       Core.DESCRIPTION[Core.KEY_PRODUCT_NAME],
+                                                       description=Core.DESCRIPTION)
         self.__service_manager.print_service_urls()
         # Executing server
         handlers = [(r'/websocket', WebSocketHandler, dict(webserver=self)),

@@ -4,16 +4,15 @@
 import urllib
 import os
 # Imports from external modules
-from tornado.ioloop import IOLoop
 from tornado.web import *
 from tornado import gen
 # Internal modules import
 from .scoreboard import Scoreboard
+from .core import Core
 
 
 class DefaultHandler(tornado.web.RequestHandler):
 
-    ENCODING = "utf-8"
     HT_DOCUMENT_PATH = "htdocs"
 
     HT_TEMPLATES = {"/display.html": ("display.html", "text/html"),
@@ -95,10 +94,10 @@ class DefaultHandler(tornado.web.RequestHandler):
                     game_clock_seconds=scoreboard.get(Scoreboard.KEY_GAME_CLOCK_SEC))
 
     @gen.engine
-    def send_display_json_data(self, client_update_count):
+    def send_display_json_data(self):
         scoreboard = self.__webserver.get_scoreboard()
         json_data = scoreboard.get_json_string()
-        self.set_header("Content-Type", "application/json")
+        self.set_header("Content-Type", Core.DATA_MIME_TYPE)
         self.write(json_data)
         self.finish()
                 
@@ -106,10 +105,8 @@ class DefaultHandler(tornado.web.RequestHandler):
         path = self.request.path
         if path == "/":
             path = "/index.html"
-        
-        if path == "/display.json":
-            update_count = int(self.request.query_arguments['count'][0])
-            self.send_display_json_data(update_count)
+        if path == Core.INITIAL_DATA_PATH:
+            self.send_display_json_data()
             return
         if path in self.HT_TEMPLATES.keys():
             file_name, mime_type = self.HT_TEMPLATES[path]
@@ -133,23 +130,23 @@ class DefaultHandler(tornado.web.RequestHandler):
         scoreboard = self.__webserver.get_scoreboard()
         try:
             # Home teams
-            home_team = arguments['home_team'][0].decode(DefaultHandler.ENCODING)
-            home_score = int(arguments['home_score'][0].decode(DefaultHandler.ENCODING))
-            home_timeouts_left = int(arguments['home_timeouts_left'][0].decode(DefaultHandler.ENCODING))
+            home_team = arguments['home_team'][0].decode(Core.ENCODING)
+            home_score = int(arguments['home_score'][0].decode(Core.ENCODING))
+            home_timeouts_left = int(arguments['home_timeouts_left'][0].decode(Core.ENCODING))
             # Guest team
-            guest_team = arguments['guest_team'][0].decode(DefaultHandler.ENCODING)
-            guest_score = int(arguments['guest_score'][0].decode(DefaultHandler.ENCODING))
-            guest_timeouts_left = int(arguments['guest_timeouts_left'][0].decode(DefaultHandler.ENCODING))
+            guest_team = arguments['guest_team'][0].decode(Core.ENCODING)
+            guest_score = int(arguments['guest_score'][0].decode(Core.ENCODING))
+            guest_timeouts_left = int(arguments['guest_timeouts_left'][0].decode(Core.ENCODING))
             # Game phase
-            game_phase = Scoreboard.GamePhase(arguments['game_phase'][0].decode(DefaultHandler.ENCODING))
+            game_phase = Scoreboard.GamePhase(arguments['game_phase'][0].decode(Core.ENCODING))
             # Clock
-            game_clock_minutes = int(arguments['game_clock_minutes'][0].decode(DefaultHandler.ENCODING))
-            game_clock_seconds = int(arguments['game_clock_seconds'][0].decode(DefaultHandler.ENCODING))
+            game_clock_minutes = int(arguments['game_clock_minutes'][0].decode(Core.ENCODING))
+            game_clock_seconds = int(arguments['game_clock_seconds'][0].decode(Core.ENCODING))
             # Ball
-            offencive_team = Scoreboard.OffenciveTeam(arguments['game_offencive_team'][0].decode(DefaultHandler.ENCODING))
-            game_down = int(arguments['game_down'][0].decode(DefaultHandler.ENCODING))
-            game_yards_to_go = int(arguments['game_yards_to_go'][0].decode(DefaultHandler.ENCODING))
-            game_ball_on = int(arguments['game_ball_on'][0].decode(DefaultHandler.ENCODING))
+            offencive_team = Scoreboard.OffenciveTeam(arguments['game_offencive_team'][0].decode(Core.ENCODING))
+            game_down = int(arguments['game_down'][0].decode(Core.ENCODING))
+            game_yards_to_go = int(arguments['game_yards_to_go'][0].decode(Core.ENCODING))
+            game_ball_on = int(arguments['game_ball_on'][0].decode(Core.ENCODING))
             # Apply changes to scoreboard
             # Home team
             scoreboard.set(Scoreboard.KEY_HOME_TEAM, home_team)

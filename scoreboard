@@ -6,7 +6,22 @@ import footballscoreboard
 if __name__ == "__main__":
     app = footballscoreboard.App()
     try:
-        app.load_plugins(sys.argv[1:])
+        # Read out master/slave mode parameter
+        try:
+            mode_parameter = sys.argv[1]
+        except IndexError:
+            footballscoreboard.App.print_help()
+            sys.exit(1)
+        # Select master or slave mode to run in
+        if (mode_parameter == "-M") or (mode_parameter == "--master"):
+            app.initialize_master_mode()
+        elif (mode_parameter == "-S") or (mode_parameter == "--slave"):
+            app.initialize_slave_mode()
+        else:
+            footballscoreboard.App.print_help()
+            sys.exit(1)
+        # Run application
+        app.load_plugins(sys.argv[2:])
         app.run()
     except (KeyboardInterrupt, SystemExit):
         app.exit()
