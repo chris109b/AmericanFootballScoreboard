@@ -4,6 +4,7 @@
 
 html, body {
     width: 100%;
+    height: 100%;
     padding: 0px;
     margin: 0px;
 }
@@ -15,6 +16,14 @@ body {
     font-size: 14pt;
     line-height: 125%;
     overflow: hidden;
+}
+
+form {
+    display: block;
+    float: left;
+    position: realative;
+    width: 100%;
+    height: 100%;
 }
 
 a {
@@ -49,23 +58,72 @@ label {
 }
 
 div.Page {
-    margin: 0 auto;
-    float: none;
     width: 100%;
     height: 100%;
-    max-width: 640px;
-    overflow: hidden;
     background-color: black;
     color: white;
 }
 
-div.ContentFrame{
+div.ContentFrame {
+    float: none;
     width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding-right: 100px;
+}
+
+div.NavigationBar {
+    position: absolute;
+    top: 0px;
+    left:0px;
+    height: 56px;
+    width:100%;
+    background-color: #333;
+    z-index:200;
+}
+
+a.BackButton {
+    display: block;
+    float: left;
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    padding: 4px 0px;
+    color: white;
+}
+
+img.HideKeyboard {
+    display: block;
+    float: left;
+    position: absolute;
+    left: 50%;
+    margin-left: -16px;
+    top: 12px;
+    width: 32px;
+    height: 32px;
+}
+
+button.SubmitButton {
+    display: block;
+    float: left;
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    height: 32px;
+    border: 2px solid white;
+    background-color: #333;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
 }
 
 div.Content{
-    width: 100%;
-    padding: 0px 0px 20px 0px;
+    width: 98%;
+    padding: 50px 1% 240px 1%;
+    border-bottom: 8px solid #333;
 }
 
 div.HomeTeamContent,
@@ -114,8 +172,8 @@ input.BigNumber{
     border: 2px solid white;
     background-color: black;
     color: white;
-    padding: 8px;
-    margin: 8px;
+    padding: 8px 4px;
+    margin: 8px  4px;
     border-radius: 10px;
 }
 
@@ -167,4 +225,27 @@ span.OffenceMarker {
 
 input.OffenceMarker:checked + span.OffenceMarker {
     opacity: 1.0;
+}
+
+
+@media screen and (min-width: 640px) and (min-height: 640px) {
+    /* 960 x 540 */
+    body {
+        font-size: 18pt;
+    }
+
+    a.BackButton {
+        top: 8px;
+    }
+
+    button.SubmitButton {
+        top: 8px;
+        height: 40px;
+    }
+
+    select.BigNumber,
+    input.BigNumber{
+        padding: 8px 8px;
+        margin: 16px 8px;
+    }
 }

@@ -28,6 +28,7 @@ class DefaultHandler(tornado.web.RequestHandler):
                 "/favicons/57.png": ("favicon_57.png", "image/png"),
                 "/favicons/72.png": ("favicon_72.png", "image/png"),
                 "/favicons/114.png": ("favicon_144.png", "image/png"),
+                "/img/hidekeyboard.png": ("hidekeyboard.png", "image/png"),
                 "/football_icon.png": ("football_icon.png", "image/png")}
 
     def log(self, message):

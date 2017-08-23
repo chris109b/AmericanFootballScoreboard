@@ -142,17 +142,17 @@ div.NetworkError {
 }
 
 @media screen and (min-width: 1004px) and (min-height: 546px) {
-/* 1024 x 576 */
-div.ContentFrame {
-    transform: translate(0, -252px) scale(0.533);
-}
+    /* 1024 x 576 */
+    div.ContentFrame {
+        transform: translate(0, -252px) scale(0.533);
+    }
 }
 
 @media screen and (min-width: 1260px) and (min-height: 700px) {
-/* 1280 x 720 */
-div.ContentFrame {
-    transform: translate(0, -178px) scale(0.666);
-}
+    /* 1280 x 720 */
+    div.ContentFrame {
+        transform: translate(0, -178px) scale(0.666);
+    }
 }
 
 @media screen and (min-width: 1346px) and (min-height: 748px) {

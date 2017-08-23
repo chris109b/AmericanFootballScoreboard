@@ -27,11 +27,10 @@
     <link rel="stylesheet" href="css/remote.css">
 </head>  
 <body>
+<form  id="scoreboard_form" method="post" enctype="multipart/form-data">
 <div class="Page">
     <div class="ContentFrame">
         <div class="Content">
-        <form  method="post" enctype="multipart/form-data">
-            <h1>Scoreboard</h1>
             <div class="ContentLine">
                 <div class="HomeTeamContent">
                     <div class="ContentHeadLine">
@@ -140,13 +139,19 @@
                     </select>
                 </div>
             </div>
-            <div class="ContentLine" style="line-height:200%;">
-                <input id="Submit" type="submit" name="submit" value="Apply">
-            </div>
-        </form>
         </div>
     </div>
+    <div class="NavigationBar">
+        <a href="/index.html" class="BackButton">
+            &lt; Scoreboard
+        </a>
+        <img src="img/hidekeyboard.png" alt="HIDE KEYBOARD" class="HideKeyboard">
+        <button class="SubmitButton" onclick="this.form.submit();">
+            Apply
+        </button>
+    </div>
 </div>
+</form>
 </body>
 </html>
 <script>
