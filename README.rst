@@ -13,6 +13,7 @@ Key features
   - Logfile Plugin - Writes data to log file with time stamps to document the course of the game and help with writing statistics.
   - Test Plugin - A simple example for you to learn how to develop your own plugin.
 - Bonjour/Avahi/Zeroconf Service Adornment - Allowing you to find the service easily.
+- Master/Slave Mode - Allowing you to connect multiple computers to the same scoreboard over network.
 
 Technology
 ----------
