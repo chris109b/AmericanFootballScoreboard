@@ -15,7 +15,8 @@ class DefaultHandler(tornado.web.RequestHandler):
 
     HT_DOCUMENT_PATH = "htdocs"
 
-    HT_TEMPLATES = {"/display.html": ("display.html", "text/html"),
+    HT_TEMPLATES = {"/simpledisplay.html": ("simpledisplay.html", "text/html"),
+                    "/display.html": ("display.html", "text/html"),
                     "/remote.html": ("remote.html", "text/html")}
 
     HT_FILES = {"/index.html": ("index.html", "text/html"),
@@ -24,6 +25,7 @@ class DefaultHandler(tornado.web.RequestHandler):
                 "/js/jquery.js": ("jquery.js", "application/javascript"),
                 "/css/remote.css": ("remote.css", "text/css"),
                 "/css/display.css": ("display.css", "text/css"),
+                "/css/simpledisplay.css": ("simpledisplay.css", "text/css"),
                 "/favicon.ico": ("favicon.ico", "image/x-icon"),
                 "/favicons/57.png": ("favicon_57.png", "image/png"),
                 "/favicons/72.png": ("favicon_72.png", "image/png"),
