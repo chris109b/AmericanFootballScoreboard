@@ -37,8 +37,16 @@ class TestPlugin(Plugin):
         pass
 
     @classmethod
-    def print_manual(cls):
-        print("{0} Users Manual".format(TestPlugin.NAME))
+    def get_help(cls):
+        return "  This is a test plugin. It doesn't need any parameters, but it takes any\n" \
+               "  parameter you throw at it. I prints all parameters on initialisation.\n" \
+               "\n" \
+               "  Usage pattern:\n" \
+               "  " + TestPlugin.__name__ + "[:[PARAMETER1];[PARAMETER2];...[PARAMETERn]\n" \
+               "  Example usage:\n" \
+               "  " + TestPlugin.__name__ + "\n" \
+               "  " + TestPlugin.__name__ + ":Test1\n" \
+               "  " + TestPlugin.__name__ + ":Test1;2;3;4"
 
     @classmethod
     def register(cls):

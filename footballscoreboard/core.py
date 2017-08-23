@@ -24,6 +24,9 @@ class Core:
     ENCODING = "utf-8"
     DATA_MIME_TYPE = "application/json"
 
+    PARAMETERS_MASTER_MODE = ["-M", "--master"]
+    PARAMETERS_SLAVE_MODE = ["-S", "--slave"]
+
     @classmethod
     def decode(cls, data):
         if isinstance(data, bytes):

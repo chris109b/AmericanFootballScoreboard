@@ -44,8 +44,16 @@ class OBSStudioPlugin(Plugin):
         pass
 
     @classmethod
-    def print_manual(cls):
-        pass
+    def get_help(cls):
+        return "  This plugin generates one text file for each value shown on the scoreboard.\n" \
+               "  The files name is the values name and it's content is the value itself.\n" \
+               "  All files are created within the same directory. If a value is changed the\n" \
+               "  corresponding file gets updated.\n" \
+               "\n" \
+               "  Usage pattern:\n" \
+               "  " + OBSStudioPlugin.__name__ + ":<TARGET_DIRECTORY>\n" \
+               "  Example usage:\n" \
+               "  " + OBSStudioPlugin.__name__ + ":/home/chris/Desktop/obs_scoreboard/"
 
     @classmethod
     def register(cls):

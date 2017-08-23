@@ -69,8 +69,8 @@ class Slave:
             initial_data_url = "http://{0}:{1}{2}".format(ipv4_address, port, Core.INITIAL_DATA_PATH)
             websocket_url = "ws://" + ipv4_address + ":" + str(port) + Core.WEBSOCKET_PATH
             self.__websocket_client = WebsocketClient(initial_data_url, websocket_url, self)
-            self.__websocket_client.connect()
             self.log("Connecting to master: http://{0}:{1}".format(ipv4_address, port))
+            self.__websocket_client.connect()
 
     def process_json_data(self, data):
         data = json.loads(data)

@@ -42,9 +42,15 @@ class LogFilePlugin(Plugin):
         pass
 
     @classmethod
-    def print_manual(cls):
-        print("Log File Plugin Manual")
-        pass
+    def get_help(cls):
+        return "  This plugin generates writes all data to a logfile whenever a value of.\n" \
+               "  the scoreboard is changed. Each line of the logfile contains a timestamp\n" \
+               "  and all values from the scoreboard with their names.\n" \
+               "\n" \
+               "  Usage pattern:\n" \
+               "  " + LogFilePlugin.__name__ + ":<LOGFILE_PATH>\n" \
+               "  Example usage:\n" \
+               "  " + LogFilePlugin.__name__ + ":/home/chris/Desktop/scoreboard_log.txt"
 
     @classmethod
     def register(cls):

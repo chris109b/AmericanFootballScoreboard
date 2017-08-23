@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 
+# Python standard library imports
+import sys
 # Internal modules import
 from .webserver import Webserver
 from .slave import Slave
 from .scoreboard import Scoreboard
 from .plugin import PluginRegistry
+from .core import Core
 from plugins import *
 
 
@@ -23,9 +26,9 @@ class App:
 
     def load_plugins(self, args):
         for argument in args:
-            self._load_plugin(argument)
+            self._load_one_plugin(argument)
 
-    def _load_plugin(self, argument):
+    def _load_one_plugin(self, argument):
         try:
             plugin_name, plugin_args_string = argument.split(":")
         except ValueError:
@@ -57,4 +60,39 @@ class App:
 
     @classmethod
     def print_help(cls):
-        print("This text does not help.")
+        print("\n--------------------------------------------------------------------------------")
+        print("\nAmerican Football Scoreboard"
+              "\n============================"
+              "\n"
+              "\nUsage"
+              "\n-----"
+              "\n"
+              "\n  " + sys.argv[0] + " <MODE> [PLUGIN PARAMETER]..."
+              "\n"
+              "\nModes"
+              "\n-----"
+              "\n"
+              "\n  " + "{:<18}".format(", ".join(Core.PARAMETERS_MASTER_MODE)) + ""
+              "Master mode is for standalone operation and to control\n"
+              "                    an entire network."
+              "\n"
+              "\n  " + "{:<18}".format(", ".join(Core.PARAMETERS_SLAVE_MODE)) + ""
+              "Slave mode doesn't provide an interface on it's own.\n"
+              "                    Instead it connects to the first master it can find\n"
+              "                    on the local network and replicates it's data in\n"
+              "                    real time. Therefore you ca use output plugins on\n"
+              "                    a different host and you can connect any device \n"
+              "                    over network."
+              "\n"
+              "\nPlugin parameters"
+              "\n-----------------"
+              "\n"
+              "\n  The pattern for activating plugins looks like this:"
+              "\n  <PLUGIN_NAME>[:[PARAMETER1];[PARAMETER2];...[PARAMETERn]"
+              "\n"
+              "\n  Here are some examples:"
+              "\n  TestPlugin"
+              "\n  TestPlugin:Test1"
+              "\n  TestPlugin:Test1;2;3;4")
+
+        PluginRegistry.print_help()
