@@ -9,7 +9,7 @@ from tornado import gen
 # Internal modules import
 from .scoreboard import Scoreboard
 from .core import Core
-
+from .gameclock import GameClock
 
 class DefaultHandler(tornado.web.RequestHandler):
 
@@ -17,13 +17,16 @@ class DefaultHandler(tornado.web.RequestHandler):
 
     HT_TEMPLATES = {"/simpledisplay.html": ("simpledisplay.html", "text/html"),
                     "/display.html": ("display.html", "text/html"),
-                    "/remote.html": ("remote.html", "text/html")}
+                    "/remote.html": ("remote.html", "text/html"),
+                    "/clock.html": ("clock.html", "text/html")}
 
     HT_FILES = {"/index.html": ("index.html", "text/html"),
                 "/css/index.css": ("index.css", "text/css"),
+                "/js/clock.js": ("clock.js", "application/javascript"),
                 "/js/display.js": ("display.js", "application/javascript"),
                 "/js/jquery.js": ("jquery.js", "application/javascript"),
                 "/css/remote.css": ("remote.css", "text/css"),
+                "/css/clock.css": ("clock.css", "text/css"),
                 "/css/display.css": ("display.css", "text/css"),
                 "/css/simpledisplay.css": ("simpledisplay.css", "text/css"),
                 "/favicon.ico": ("favicon.ico", "image/x-icon"),
@@ -77,6 +80,7 @@ class DefaultHandler(tornado.web.RequestHandler):
 
     def send_page(self, file_path):
         scoreboard = self.__webserver.get_scoreboard()
+        clock = self.__webserver.get_scoreboard().get_clock()
         # HTML rendering
         self.render(file_path,
                     offence_home_value=Scoreboard.OffenciveTeam.HOME.value,
@@ -94,7 +98,12 @@ class DefaultHandler(tornado.web.RequestHandler):
                     game_yards_to_go=scoreboard.get(Scoreboard.KEY_GAME_YARDS_TO_GO),
                     game_ball_on=scoreboard.get(Scoreboard.KEY_GAME_BALL_ON),
                     game_clock_minutes=scoreboard.get(Scoreboard.KEY_GAME_CLOCK_MIN),
-                    game_clock_seconds=scoreboard.get(Scoreboard.KEY_GAME_CLOCK_SEC))
+                    game_clock_seconds=scoreboard.get(Scoreboard.KEY_GAME_CLOCK_SEC),
+                    clock_mode_list=[element.value for element in GameClock.ClockMode],
+                    clock_mode=clock.get_mode(),
+                    clock_minutes=clock.get_minutes(),
+                    clock_seconds=clock.get_seconds(),
+                    clock_is_ticking=clock.is_ticking())
 
     @gen.engine
     def send_display_json_data(self):
@@ -131,6 +140,7 @@ class DefaultHandler(tornado.web.RequestHandler):
     def post(self, *args, **kwargs):
         arguments = self.request.body_arguments
         scoreboard = self.__webserver.get_scoreboard()
+
         try:
             # Home teams
             home_team = arguments['home_team'][0].decode(Core.ENCODING)
@@ -151,6 +161,18 @@ class DefaultHandler(tornado.web.RequestHandler):
             game_yards_to_go = int(arguments['game_yards_to_go'][0].decode(Core.ENCODING))
             game_ball_on = int(arguments['game_ball_on'][0].decode(Core.ENCODING))
             # Apply changes to scoreboard
+
+            clock = scoreboard.get_clock()
+            if clock.get_mode() != GameClock.ClockMode.DECREMENTING:
+                clock.set_mode(GameClock.ClockMode.DECREMENTING)
+                clock.set_minutes(game_clock_minutes)
+                clock.set_seconds(game_clock_seconds)
+
+            if clock.is_ticking():
+                clock.stop()
+            else:
+                clock.start()
+
             # Home team
             scoreboard.set(Scoreboard.KEY_HOME_TEAM, home_team)
             scoreboard.set(Scoreboard.KEY_HOME_SCORE, home_score)

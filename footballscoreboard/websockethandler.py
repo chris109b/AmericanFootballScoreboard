@@ -4,18 +4,21 @@
 
 # Imports from external modules
 import tornado.websocket
-
 # Internal modules import
+from .scoreboard import ScoreboardEventListener
 
 
-class WebSocketHandler(tornado.websocket.WebSocketHandler):
+class WebSocketHandler(tornado.websocket.WebSocketHandler, ScoreboardEventListener):
 
     def initialize(self, webserver):
         self.__webserver = webserver
 
-    def on_change(self, scoreboard):
+    def on_scoreboard_update(self, scoreboard):
         data = scoreboard.get_json_string()
         self.write_message(data)
+
+    def on_clock_update(self, entries, update_count, json_string):
+        self.write_message(json_string)
 
     def open(self):
         scoreboard = self.__webserver.get_scoreboard()

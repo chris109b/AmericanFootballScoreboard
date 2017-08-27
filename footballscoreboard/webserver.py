@@ -7,6 +7,7 @@ import tornado.ioloop
 from .zeroconfserviceregistration import ZeroConfServiceRegistration
 from .webhandler import DefaultHandler
 from .websockethandler import WebSocketHandler
+from .clockcontrolhandler import ClockControlHandler
 from .core import Core
 
 
@@ -36,10 +37,11 @@ class Webserver(object):
         self.__service_manager.print_service_urls()
         # Executing server
         handlers = [(r'/websocket', WebSocketHandler, dict(webserver=self)),
+                    (r'/clock_websocket', ClockControlHandler, dict(webserver=self)),
                     (r'.*', DefaultHandler, dict(webserver=self))]
         self.__web_service = tornado.web.Application(handlers)
         self.__web_service.listen(port)
-        tornado.ioloop.IOLoop.instance().start()
+        tornado.ioloop.IOLoop.current().start()
 
     def stop(self):
         tornado.ioloop.IOLoop.current().stop()

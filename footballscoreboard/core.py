@@ -9,9 +9,11 @@ class Core:
     KEY_PRODUCT_VERSION = 'product_version'
     KEY_API_INITIAL_DATA_PATH = 'api_initial_data_path'
     KEY_API_WEBSOCKET_PATH = 'api_websocket_path'
+    KEY_API_CLOCK_WEBSOCKET_PATH = 'api_clock_websocket_path'
 
     INITIAL_DATA_PATH = "/display.json"
     WEBSOCKET_PATH = "/websocket"
+    CLOCK_WEBSOCKET_PATH = "/clock_websocket"
 
     DESCRIPTION = {KEY_VENDOR_NAME: 'Christian Beuschel',
                    KEY_VENDOR_URI: 'http://chris-macht-fotos.de',
@@ -19,7 +21,8 @@ class Core:
                    KEY_PRODUCT_URI: 'http://chris-macht-fotos.de/products/american-football-scoreboard/',
                    KEY_PRODUCT_VERSION: 'DEFAULT 0.1',
                    KEY_API_INITIAL_DATA_PATH: INITIAL_DATA_PATH,
-                   KEY_API_WEBSOCKET_PATH: WEBSOCKET_PATH}
+                   KEY_API_WEBSOCKET_PATH: WEBSOCKET_PATH,
+                   KEY_API_CLOCK_WEBSOCKET_PATH: CLOCK_WEBSOCKET_PATH}
 
     ENCODING = "utf-8"
     DATA_MIME_TYPE = "application/json"
