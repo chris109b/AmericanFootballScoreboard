@@ -2,6 +2,8 @@
 
 An application to display, manage and distribute scoreboard data for American Football games in various ways.
 
+![American Football Display](docs/screenshots/Full-Featured-American-Football-Display.png)
+
 ## Key features
 
 * Remote Control Interface - A simple web interface to change the information shown on the board (optimized for smart phones and tablets).
