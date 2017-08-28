@@ -8,20 +8,24 @@ from .slave import Slave
 from .scoreboard import Scoreboard
 from .plugin import PluginRegistry
 from .core import Core
+from .masterclock import MasterClock
+from .slaveclock import SlaveClock
 from plugins import *
 
 
 class App:
 
     def __init__(self):
-        self.__scoreboard = Scoreboard()
+        self.__scoreboard = None
         self.__webserver = None
         self.__web_client = None
 
     def initialize_master_mode(self):
+        self.__scoreboard = Scoreboard(MasterClock())
         self.__webserver = Webserver(self.__scoreboard, None)
 
     def initialize_slave_mode(self):
+        self.__scoreboard = Scoreboard(SlaveClock())
         self.__web_client = Slave(self.__scoreboard)
 
     def load_plugins(self, args):
@@ -42,7 +46,8 @@ class App:
                 except ValueError:
                     plugin_args_list = [plugin_args_string]
             plugin = PluginRegistry.load_plugin(plugin_name, plugin_args_list)
-            self.__scoreboard.add_plugin(plugin)
+            if plugin is not None:
+                self.__scoreboard.add_plugin(plugin)
 
     def run(self):
         self.__scoreboard.start()

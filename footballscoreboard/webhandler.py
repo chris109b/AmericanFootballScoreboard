@@ -9,31 +9,31 @@ from tornado import gen
 # Internal modules import
 from .scoreboard import Scoreboard
 from .core import Core
-from .gameclock import GameClock
+from .masterclock import MasterClock
 
 class DefaultHandler(tornado.web.RequestHandler):
 
     HT_DOCUMENT_PATH = "htdocs"
 
-    HT_TEMPLATES = {"/simpledisplay.html": ("simpledisplay.html", "text/html"),
-                    "/display.html": ("display.html", "text/html"),
+    HT_TEMPLATES = {"/display_simple.html": ("display_simple.html", "text/html"),
+                    "/display_american_football.html": ("display_american_football.html", "text/html"),
                     "/remote.html": ("remote.html", "text/html"),
-                    "/clock.html": ("clock.html", "text/html")}
+                    "/remote_control_interface.html": ("remote_control_interface.html", "text/html")}
 
     HT_FILES = {"/index.html": ("index.html", "text/html"),
                 "/css/index.css": ("index.css", "text/css"),
-                "/js/clock.js": ("clock.js", "application/javascript"),
+                "/js/remote_control_interface.js": ("remote_control_interface.js", "application/javascript"),
                 "/js/display.js": ("display.js", "application/javascript"),
                 "/js/jquery.js": ("jquery.js", "application/javascript"),
                 "/css/remote.css": ("remote.css", "text/css"),
-                "/css/clock.css": ("clock.css", "text/css"),
-                "/css/display.css": ("display.css", "text/css"),
-                "/css/simpledisplay.css": ("simpledisplay.css", "text/css"),
+                "/css/remote_control_interface.css": ("remote_control_interface.css", "text/css"),
+                "/css/display_american_football.css": ("display_american_football.css", "text/css"),
+                "/css/display_simple.css": ("display_simple.css", "text/css"),
                 "/favicon.ico": ("favicon.ico", "image/x-icon"),
                 "/favicons/57.png": ("favicon_57.png", "image/png"),
                 "/favicons/72.png": ("favicon_72.png", "image/png"),
                 "/favicons/114.png": ("favicon_144.png", "image/png"),
-                "/img/hidekeyboard.png": ("hidekeyboard.png", "image/png"),
+                "/img/hide_keyboard.png": ("hide_keyboard.png", "image/png"),
                 "/football_icon.png": ("football_icon.png", "image/png")}
 
     def log(self, message):
@@ -97,9 +97,9 @@ class DefaultHandler(tornado.web.RequestHandler):
                     game_down=scoreboard.get(Scoreboard.KEY_GAME_DOWN),
                     game_yards_to_go=scoreboard.get(Scoreboard.KEY_GAME_YARDS_TO_GO),
                     game_ball_on=scoreboard.get(Scoreboard.KEY_GAME_BALL_ON),
-                    game_clock_minutes=scoreboard.get(Scoreboard.KEY_GAME_CLOCK_MIN),
-                    game_clock_seconds=scoreboard.get(Scoreboard.KEY_GAME_CLOCK_SEC),
-                    clock_mode_list=[element.value for element in GameClock.ClockMode],
+                    game_clock_minutes=scoreboard.get_clock().get_minutes(),
+                    game_clock_seconds=scoreboard.get_clock().get_seconds(),
+                    clock_mode_list=[element.value for element in MasterClock.ClockMode],
                     clock_mode=clock.get_mode(),
                     clock_minutes=clock.get_minutes(),
                     clock_seconds=clock.get_seconds(),
@@ -134,69 +134,4 @@ class DefaultHandler(tornado.web.RequestHandler):
 
     @asynchronous
     def get(self):
-        self.send_reply()
-
-    @asynchronous
-    def post(self, *args, **kwargs):
-        arguments = self.request.body_arguments
-        scoreboard = self.__webserver.get_scoreboard()
-
-        try:
-            # Home teams
-            home_team = arguments['home_team'][0].decode(Core.ENCODING)
-            home_score = int(arguments['home_score'][0].decode(Core.ENCODING))
-            home_timeouts_left = int(arguments['home_timeouts_left'][0].decode(Core.ENCODING))
-            # Guest team
-            guest_team = arguments['guest_team'][0].decode(Core.ENCODING)
-            guest_score = int(arguments['guest_score'][0].decode(Core.ENCODING))
-            guest_timeouts_left = int(arguments['guest_timeouts_left'][0].decode(Core.ENCODING))
-            # Game phase
-            game_phase = Scoreboard.GamePhase(arguments['game_phase'][0].decode(Core.ENCODING))
-            # Clock
-            game_clock_minutes = int(arguments['game_clock_minutes'][0].decode(Core.ENCODING))
-            game_clock_seconds = int(arguments['game_clock_seconds'][0].decode(Core.ENCODING))
-            # Ball
-            offencive_team = Scoreboard.OffenciveTeam(arguments['game_offencive_team'][0].decode(Core.ENCODING))
-            game_down = int(arguments['game_down'][0].decode(Core.ENCODING))
-            game_yards_to_go = int(arguments['game_yards_to_go'][0].decode(Core.ENCODING))
-            game_ball_on = int(arguments['game_ball_on'][0].decode(Core.ENCODING))
-            # Apply changes to scoreboard
-
-            clock = scoreboard.get_clock()
-            if clock.get_mode() != GameClock.ClockMode.DECREMENTING:
-                clock.set_mode(GameClock.ClockMode.DECREMENTING)
-                clock.set_minutes(game_clock_minutes)
-                clock.set_seconds(game_clock_seconds)
-
-            if clock.is_ticking():
-                clock.stop()
-            else:
-                clock.start()
-
-            # Home team
-            scoreboard.set(Scoreboard.KEY_HOME_TEAM, home_team)
-            scoreboard.set(Scoreboard.KEY_HOME_SCORE, home_score)
-            scoreboard.set(Scoreboard.KEY_HOME_TIMEOUTS_LEFT, home_timeouts_left)
-            # Guest team
-            scoreboard.set(Scoreboard.KEY_GUEST_TEAM, guest_team)
-            scoreboard.set(Scoreboard.KEY_GUEST_SCORE, guest_score)
-            scoreboard.set(Scoreboard.KEY_GUEST_TIMEOUTS_LEFT, guest_timeouts_left)
-            # Ball
-            scoreboard.set(Scoreboard.KEY_GAME_OFFENCIVE_TEAM, offencive_team)
-            scoreboard.set(Scoreboard.KEY_GAME_DOWN, game_down)
-            scoreboard.set(Scoreboard.KEY_GAME_YARDS_TO_GO, game_yards_to_go)
-            scoreboard.set(Scoreboard.KEY_GAME_BALL_ON, game_ball_on)
-            # Game phase
-            scoreboard.set(Scoreboard.KEY_GAME_PHASE, game_phase)
-            # Clock
-            scoreboard.set(Scoreboard.KEY_GAME_CLOCK_MIN, game_clock_minutes)
-            scoreboard.set(Scoreboard.KEY_GAME_CLOCK_SEC, game_clock_seconds)
-        except ValueError:
-            self.send_common_error()
-            return
-        except TypeError:
-            self.send_common_error()
-            return
-        finally:
-            scoreboard.submit()
         self.send_reply()

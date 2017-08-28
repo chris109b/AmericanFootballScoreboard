@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">  
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <title>Scoreboard Web UI</title>
@@ -22,18 +22,44 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <!-- Disable automatic phone number detection -->
     <meta name="format-detection" content="telephone=no" />
-    
+
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="css/index.css">
-</head>  
+    <link rel="stylesheet" href="css/display_simple.css">
+
+    <!-- JavaScript -->
+    <script language="JavaScript" type="text/javascript" src="js/jquery.js"></script>
+    <script language="JavaScript" type="text/javascript" src="js/display.js"></script>
+</head>
 <body>
 <div class="Page">
     <div class="ContentFrame">
         <div class="Content">
-            <h1>Scoreboard</h1>
-            <p><a href="display_american_football.html">Full American Football Display</a></p>
-            <p><a href="display_simple.html">Simple Display</a></p>
-            <p><a href="remote_control_interface.html">Remote Control Interface</a></p>
+
+                <div id="HomeTeamName" class="TeamName">
+                    <span id="home_team">{{ home_team }}</span>
+                </div>
+                <div  id="HomeTeamScore" class="TeamScore">
+                    <span id="home_score">{{ '{num:02d}'.format(num=home_score) }}</span>
+                </div>
+            <div id="Clock">
+                <div class="DefaultHeadline">
+                    Time
+                </div>
+                <div class="Time">
+                    <span id="game_clock_minutes">{{ '{num:02d}'.format(num=game_clock_minutes) }}</span>:<span id="game_clock_seconds">{{ '{num:02d}'.format(num=game_clock_seconds) }}</span>
+                </div>
+            </div>
+
+                <div id="GuestTeamName" class="TeamName">
+                    <span id="guest_team">{{ guest_team }}</span>
+                </div>
+                <div  id="GuestTeamScore" class="TeamScore">
+                    <span id="guest_score">{{ '{num:02d}'.format(num=guest_score) }}</span>
+                </div>
+            </div>
+            <div class="NetworkError HiddenObject">
+                NO NETWORK
+            </div>
         </div>
     </div>
 </div>

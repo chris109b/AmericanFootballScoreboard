@@ -13,8 +13,13 @@ class PluginRegistry:
 
     @classmethod
     def load_plugin(cls, plugin_name, args):
-        plugin = PluginRegistry.__plugins[plugin_name](args)
-        return plugin
+        try:
+            plugin = PluginRegistry.__plugins[plugin_name](args)
+        except KeyError:
+            print("There is no plugin named \"%s\"." % plugin_name)
+            return None
+        else:
+            return plugin
 
     @classmethod
     def __underline(cls, string):

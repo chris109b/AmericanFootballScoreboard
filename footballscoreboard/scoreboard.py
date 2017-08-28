@@ -5,7 +5,7 @@ from enum import Enum
 import json
 # Imports from external modules
 # Internal modules import
-from .gameclock import GameClock, GameClockDelegate
+from .masterclock import MasterClock
 
 
 class ScoreboardEventListener:
@@ -44,8 +44,6 @@ class Scoreboard(object):
     KEY_GUEST_TIMEOUTS_LEFT = "guest_timeouts_left"
 
     KEY_GAME_PHASE = "game_phase"
-    KEY_GAME_CLOCK_MIN = "game_clock_minutes"
-    KEY_GAME_CLOCK_SEC = "game_clock_seconds"
 
     KEY_GAME_OFFENCIVE_TEAM = "game_offencive_team"
 
@@ -66,9 +64,7 @@ class Scoreboard(object):
         QTR_4 = "4th Qtr."
         END = "End"
 
-    def __init__(self):
-        self._minutes_entry = ScoreboardEntry(Scoreboard.KEY_GAME_CLOCK_MIN, 12)
-        self._second_entry = ScoreboardEntry(Scoreboard.KEY_GAME_CLOCK_SEC, 0)
+    def __init__(self, clock):
         self._entries = [ScoreboardEntry(Scoreboard.KEY_HOME_TEAM, "Home"),
                          ScoreboardEntry(Scoreboard.KEY_HOME_SCORE, 0),
                          ScoreboardEntry(Scoreboard.KEY_HOME_TIMEOUTS_LEFT, 3),
@@ -79,30 +75,13 @@ class Scoreboard(object):
                          ScoreboardEntry(Scoreboard.KEY_GAME_DOWN, 0),
                          ScoreboardEntry(Scoreboard.KEY_GAME_YARDS_TO_GO, 10),
                          ScoreboardEntry(Scoreboard.KEY_GAME_BALL_ON, 50),
-                         ScoreboardEntry(Scoreboard.KEY_GAME_PHASE, Scoreboard.GamePhase.PRE_GAME),
-                         self._minutes_entry,
-                         self._second_entry]
+                         ScoreboardEntry(Scoreboard.KEY_GAME_PHASE, Scoreboard.GamePhase.PRE_GAME)]
         self._event_listeners = []
         self._plugins = []
         self._update_count = 0
-        self._clock = GameClock(self)
+        self._clock = clock
 
     # MARK: Accessing Data
-
-    def update_clock(self, minutes, seconds):
-        # Update values
-        self._minutes_entry.change(int(minutes))
-        self._second_entry.change(int(seconds))
-        self._update_count += 1
-        # Create JSON string
-        json_data = {'update_counter': self._update_count, 'scoreboard': {}}
-        entries = [self._minutes_entry, self._second_entry]
-        for entry in entries:
-            json_data['scoreboard'][entry.key] = entry.value
-        json_string = json.dumps(json_data)
-        # Inform listeners
-        for listener in self._event_listeners:
-            listener.on_clock_update(entries, self._update_count, json_string)
 
     def get_clock(self):
         return self._clock

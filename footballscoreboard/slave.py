@@ -72,9 +72,8 @@ class Slave:
             self.log("Connecting to master: http://{0}:{1}".format(ipv4_address, port))
             self.__websocket_client.connect()
 
-    def process_json_data(self, data):
-        data = json.loads(data)
-        values = data['scoreboard']
+    def receive_scoreboard_update(self, payload):
+        values = payload['scoreboard']
         # Home Team
         home_team = values['home_team']
         home_score = int(values['home_score'])
@@ -85,9 +84,6 @@ class Slave:
         guest_timeouts_left = int(values['guest_timeouts_left'])
         # Game phase
         game_phase = Scoreboard.GamePhase(values['game_phase'])
-        # Clock
-        game_clock_minutes = int(values['game_clock_minutes'])
-        game_clock_seconds = int(values['game_clock_seconds'])
         # Ball
         game_offencive_team = Scoreboard.OffenciveTeam(values['game_offencive_team'])
         game_down = int(values['game_down'])
@@ -109,8 +105,27 @@ class Slave:
         self.__scoreboard.set(Scoreboard.KEY_GAME_BALL_ON, game_ball_on)
         # Game phase
         self.__scoreboard.set(Scoreboard.KEY_GAME_PHASE, game_phase)
-        # Clock
-        self.__scoreboard.set(Scoreboard.KEY_GAME_CLOCK_MIN, game_clock_minutes)
-        self.__scoreboard.set(Scoreboard.KEY_GAME_CLOCK_SEC, game_clock_seconds)
         # Submit updates
         self.__scoreboard.submit()
+
+    def receive_clock_update(self, payload):
+        pass
+
+    def receive_time_update(self, payload):
+        pass
+
+    def process_json_data(self, data):
+        data = json.loads(data)
+        event = data["event"]
+        if event == "time_update":
+            payload = data["data"]
+            self.receive_time_update(payload)
+        elif event == "clock_update":
+            payload = data["data"]
+            self.receive_clock_update(payload)
+        elif event == "scoreboard_update":
+            payload = data["data"]
+            self.receive_scoreboard_update(payload)
+        else:
+            print("Unknown event:", event)
+

@@ -8,7 +8,8 @@ import tornado.websocket
 # Internal modules import
 from .scoreboard import Scoreboard
 from .core import Core
-from .gameclock import GameClock, GameClockEventListener
+from .masterclock import MasterClock
+from .clock import ClockEventListener
 
 
 class Event(Enum):
@@ -52,7 +53,7 @@ class CommandLib:
     def update_clock_settings(cls, parameters, _, webserver):
         clock = webserver.get_scoreboard().get_clock()
         try:
-            clock.set_mode(GameClock.ClockMode(parameters['clock_mode']))
+            clock.set_mode(MasterClock.ClockMode(parameters['clock_mode']))
             clock.set_seconds(int(parameters['clock_seconds']))
             clock.set_minutes(int(parameters['clock_minutes']))
         except ValueError as e:
@@ -72,7 +73,7 @@ class CommandLib:
         clock = webserver.get_scoreboard().get_clock()
         clock.stop()
 
-class ClockControlHandler(tornado.websocket.WebSocketHandler, GameClockEventListener):
+class ClockControlHandler(tornado.websocket.WebSocketHandler, ClockEventListener):
 
     # MARK: Websocket live cycle
 

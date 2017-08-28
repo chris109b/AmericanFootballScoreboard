@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Scoreboard Web UI</title>
+    <!-- Technical content description -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="content-style-type" content="text/css"/>
+    <meta http-equiv="expires" content="0"/>
+    <meta charset="utf-8">
+    <!-- Configure Safari on iPhone -->
+    <meta name="viewport" content="width = device-width, initial-scale = 1.0, user-scalable = no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- Provide icons for several browsers -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <!-- Provide app icons for iPhone home screen -->
+    <link rel="apple-touch-icon-precomposed" href="favicons/57.png" />
+    <link rel="apple-touch-icon-precomposed" href="favicons/72.png" sizes="72x72" />
+    <link rel="apple-touch-icon-precomposed" href="favicons/114.png" sizes="114x114" />
+    <!-- Change iPhone status bar (default, black, black-translucent) -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <!-- Disable automatic phone number detection -->
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/remote_control_interface.css">
+
+    <!-- JavaScript -->
+    <script language="JavaScript" type="text/javascript" src="js/jquery.js"></script>
+    <script language="JavaScript" type="text/javascript" src="js/remote_control_interface.js"></script>
+</head>
+<body>
+<div class="Page">
+    <div class="ContentFrame">
+        <div id="ScoreboardFormArea" class="Screen">
+            <div class="ScrollView">
+                <div class="Content">
+                    <form id="ScoreboardForm" class="Form">
+                        <div class="ContentLine">
+                            <div class="HomeTeamContent">
+                                <div class="ContentHeadLine">
+                                    <label id="HomeTeamName">Home</label>
+                                </div>
+                                <div class="ContentLine">
+                                    <input class="TeamName" id="home_team" name="home_team" type="text" value="{{ home_team }}" autocorrect="off">
+                                </div>
+                            </div>
+                            <div class="GuestTeamContent">
+                                <div class="ContentHeadLine">
+                                    <label id="GuestTeamName">Guest</label>
+                                </div>
+                                <div class="ContentLine">
+                                    <input class="TeamName" id="guest_team" name="guest_team" type="text" value="{{ guest_team }}" autocorrect="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ContentLine">
+                            <div class="HomeTeamContent">
+                                <div class="ContentHeadLine">
+                                    <label id="HomeTeamScore">Score</label>
+                                </div>
+                                <div class="ContentLine">
+                                    <input class="BigNumber" id="home_score" name="home_score" type="number" size="2" value="{{ home_score }}" onfocus="this.select();">
+                                </div>
+                            </div>
+                            <div class="GuestTeamContent">
+                                <div class="ContentHeadLine">
+                                    <label id="GuestTeamScore">Score</label>
+                                </div>
+                                <div class="ContentLine">
+                                    <input class="BigNumber" id="guest_score"  name="guest_score" type="number" size="2" value="{{ guest_score }}" onfocus="this.select();">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="GameContent">
+                            <div class="ContentHeadLine">
+                                <label id="GameBall">Offence</label>
+                            </div>
+                            <div class="HomeTeamContent">
+                                <div class="ContentLine">
+                                    <input class="OffenceMarker" type="radio" id="game_offencive_team_home" name="game_offencive_team" value="{{ offence_home_value }}"{% if game_offencive_team.value == offence_home_value %} checked{% end %}><span class="OffenceMarker"> </span>
+                                </div>
+                            </div>
+                            <div class="GuestTeamContent">
+                                <div class="ContentLine">
+                                    <input class="OffenceMarker" type="radio" id="game_offencive_team_guest" name="game_offencive_team" value="{{ offence_guest_value }}"{% if game_offencive_team.value == offence_guest_value %} checked{% end %}><span class="OffenceMarker"> </span>
+                                </div>
+                            </div>
+                            <div class="ContentLine">
+                                <div class="HomeTeamContent">
+                                    <div class="ContentHeadLine">
+                                        <label id="HomeTeamTimeoutsLeft">Timeouts left</label>
+                                    </div>
+                                    <div class="ContentLine">
+                                        <input class="BigNumber" id="home_timeouts_left" name="home_timeouts_left" type="number" size="2" value="{{ home_timeouts_left }}" onfocus="this.select();">
+                                    </div>
+                                </div>
+                                <div class="GuestTeamContent">
+                                    <div class="ContentHeadLine">
+                                        <label id="GuestTeamTimeoutsLeft">Timeouts left</label>
+                                    </div>
+                                    <div class="ContentLine">
+                                        <input class="BigNumber" id="guest_timeouts_left" name="guest_timeouts_left" type="number" size="2" value="{{ guest_timeouts_left }}" onfocus="this.select();">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ContentLine">
+                                <div class="ThirdLine">
+                                    <div class="ContentHeadLine">
+                                        <label id="GameDown">Down</label>
+                                    </div>
+                                    <div class="ContentLine">
+                                        <input class="BigNumber" id="game_down" name="game_down" type="number" size="2" value="{{ game_down }}" onfocus="this.select();">
+                                    </div>
+                                </div>
+                                <div class="ThirdLine">
+                                    <div class="ContentHeadLine">
+                                        <label id="GameYardsToGo">Ball on</label>
+                                    </div>
+                                    <div class="ContentLine">
+                                        <input class="BigNumber" id="game_yards_to_go" name="game_yards_to_go" type="number" size="2" value="{{ game_yards_to_go }}" onfocus="this.select();">
+                                    </div>
+                                </div>
+                                <div class="ThirdLine">
+                                    <div class="ContentHeadLine">
+                                        <label id="GameBallOn">To go</label>
+                                    </div>
+                                    <div class="ContentLine">
+                                        <input class="BigNumber" id="game_ball_on"  name="game_ball_on" type="number" size="2" value="{{ game_ball_on }}" onfocus="this.select();">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ContentHeadLine">
+                                <label id="GamePhase">Game clock</label>
+                            </div>
+                            <div class="ContentLine">
+                                <select id="game_phase" name="game_phase" class="BigNumber">
+                                    {% for game_phase_value in game_phase_list %}
+                                        {% block game_phase_value %}
+                                            <option value="{{ game_phase_value }}"{% if game_phase_value == game_phase.value %} selected{% end %}>{{ escape(game_phase_value) }}</option>
+                                        {% end %}
+                                    {% end %}
+                                </select>
+                            </div>
+                            <div class="ContentLine">
+                                <div id="ShowClockButton" class="FormButton">Show Clock</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="ScoreboardFormNavigationBar" class="NavigationBar">
+                <div id="ScoreboardFormAreaBackButton" class="NavigationBarBackButton">
+                    Back
+                </div>
+                <div class="NavigationBarTitle">
+                    Scoreboard
+                </div>
+                <div id="ScoreboardFormAreaSubmitButton" class="NavigationBarSubmitButton">
+                    Submit
+                </div>
+            </div>
+        </div>
+        <div id="ClockOperationArea"  class="Screen HiddenScreen">
+            <div class="StaticContent">
+                <div class="ClockOperationFrame">
+                    <div id="ClockOperationTime" class="ClockOperationTime {% if clock_is_ticking is True %} Ticking{% else %} Stopped{% end %}">
+                        <span id="minutes">{{ clock_minutes }}</span>:<span id="seconds">{{ game_clock_seconds }}</span>
+                    </div>
+                    <div id="StartButton" class="ClockOperationButton">
+                        <div class="OperationButtonLabel">Start</div>
+                    </div>
+                    <div id="StopButton" class="ClockOperationButton">
+                        <div class="OperationButtonLabel">Stop</div>
+                    </div>
+                </div>
+            </div>
+            <div class="NavigationBar">
+                <div id="ClockOperationAreaBackButton" class="NavigationBarBackButton">
+                    Back
+                </div>
+                <div class="NavigationBarTitle">
+                    Clock Control
+                </div>
+                <div id="ClockOperationAreaSettingsButton" class="NavigationBarSubmitButton">
+                    Set
+                </div>
+            </div>
+        </div>
+        <div id="ClockSettingsArea" class="Screen HiddenScreen">
+            <div class="StaticContent">
+                <form id="ClockSettingsForm" class="Form">
+                    <div class="FormLine">
+                        <select id="clock_mode" name="clock_mode" class="BigNumber">
+                            {% for clock_mode_value in clock_mode_list %}
+                                {% block clock_mode_value %}
+                                    <option value="{{ clock_mode_value }}"{% if clock_mode_value == clock_mode.value %} selected{% end %}>{{ escape(clock_mode_value) }}</option>
+                                {% end %}
+                            {% end %}
+                        </select>
+                    </div>
+                    <div class="FormLine">
+                        <input id="clock_minutes" class="BigNumber" name="clock_minutes" type="number" size="2" value="{{ clock_minutes }}" onfocus="this.select();"><span class="BigNumberSeparator">:</span><input class="BigNumber" id="clock_seconds" name="clock_seconds" type="number" size="2" value="{{ game_clock_seconds }}" onfocus="this.select();">
+                    </div>
+                </form>
+            </div>
+            <div class="NavigationBar">
+                <div id="ClockSettingAreaBackButton" class="NavigationBarBackButton">
+                    Cancel
+                </div>
+                <div class="NavigationBarTitle">
+                    Clock Settings
+                </div>
+                <div id="ClockSettingAreaSubmitButton" class="NavigationBarSubmitButton">
+                    Submit
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
