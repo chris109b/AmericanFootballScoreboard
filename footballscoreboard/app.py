@@ -50,14 +50,16 @@ class App:
                 self.__scoreboard.add_plugin(plugin)
 
     def run(self):
-        self.__scoreboard.start()
+        if self.__scoreboard is not None:
+            self.__scoreboard.start()
         if self.__webserver is not None:
             self.__webserver.start()
         if self.__web_client is not None:
             self.__web_client.start()
 
     def exit(self):
-        self.__scoreboard.stop()
+        if self.__scoreboard is not None:
+            self.__scoreboard.stop()
         if self.__webserver is not None:
             self.__webserver.stop()
         if self.__web_client is not None:
@@ -101,3 +103,4 @@ class App:
               "\n  TestPlugin:Test1;2;3;4")
 
         PluginRegistry.print_help()
+
