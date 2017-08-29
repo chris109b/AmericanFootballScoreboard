@@ -24,21 +24,25 @@ class LogFilePlugin(Plugin):
             message = "Missing parameter LOG_FILE_PATH"
             self.raise_parameter_error(LogFilePlugin.NAME, message)
 
-    def start(self, scoreboard):
+    def start(self, scoreboard, clock):
         with open(self._target_file_path, 'a') as fp:
             line = time.strftime("%Y-%m-%d %H:%M:%S > ") + "American Football Scoreboard " + self.NAME + " started"
             fp.write("========== " + line + " ==========\n")
 
-    def update(self, scoreboard):
+    def update(self, scoreboard, clock):
         with open(self._target_file_path, 'a') as fp:
             all_entries = scoreboard.get_all_entries()
-            line = time.strftime("%Y-%m-%d %H:%M:%S > ")
+            timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+            minutes = clock.get_minutes()
+            seconds = clock.get_seconds()
+            ticking_string = "CLOCK_IS_TICKING" if clock.is_ticking() else "CLOCK_IS_STOPPED"
+            line = "{0} > {1:02d}:{2:02d} {3} > ".format(timestamp, minutes, seconds, ticking_string)
             for entry in all_entries:
                 value = (entry.value.value if isinstance(entry.value, Enum) else entry.value)
                 line += str(entry.key) + "=" + str(value) + ";"
             fp.write(line + "\n")
 
-    def stop(self, scoreboard):
+    def stop(self, scoreboard, clock):
         pass
 
     @classmethod

@@ -16,7 +16,7 @@ class TestPlugin(Plugin):
         print("Initializing {0} with arguments:".format(TestPlugin.NAME))
         print(args)
 
-    def start(self, scoreboard):
+    def start(self, scoreboard, clock):
         print("{0} started".format(TestPlugin.NAME))
 
     @classmethod
@@ -24,7 +24,7 @@ class TestPlugin(Plugin):
         for entry in entry_list:
             print("{0} = {1}".format(entry.key, (entry.value.value if isinstance(entry.value, Enum) else entry.value)))
 
-    def update(self, scoreboard):
+    def update(self, scoreboard, clock):
         print("================================================================================")
         print("All entries:")
         self.print_entries(scoreboard.get_all_entries())
@@ -32,7 +32,10 @@ class TestPlugin(Plugin):
         print("Changed entries:")
         self.print_entries(scoreboard.get_changed_entries())
 
-    def stop(self, scoreboard):
+    def time_update(self, minute, second):
+        self.print("Time update: {0:02d}:{1:02d}".format(minute, second))
+
+    def stop(self, scoreboard, clock):
         print("{0} stopped".format(TestPlugin.NAME))
         pass
 

@@ -12,6 +12,8 @@ class OBSStudioPlugin(Plugin):
 
     NAME = "OBS Studio Plugin"
 
+    CLOCK_FILE_NAME = "clock.txt"
+
     def __init__(self, args):
         super().__init__()
         # Parameter: Target Directory
@@ -32,14 +34,19 @@ class OBSStudioPlugin(Plugin):
             with open(file_path, 'w') as fp:
                 fp.write(str(value))
 
-    def start(self, scoreboard):
+    def start(self, scoreboard, clock):
         print("OBS Studio Plugin started")
         self.write_entries(scoreboard.get_all_entries())
 
-    def update(self, scoreboard):
+    def update(self, scoreboard, clock):
         self.write_entries(scoreboard.get_changed_entries())
 
-    def stop(self, scoreboard):
+    def time_update(self, minute, second):
+        file_path = os.path.join(self._target_directory, self.CLOCK_FILE_NAME)
+        with open(file_path, 'w') as fp:
+            fp.write("{0:02d}:{1}".format(minute, second))
+
+    def stop(self, scoreboard, clock):
         print("OBS Studio Plugin stopped")
         pass
 

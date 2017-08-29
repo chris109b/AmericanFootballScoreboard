@@ -24,6 +24,6 @@ if __name__ == "__main__":
             sys.exit(1)
         # Run application
         app.load_plugins(sys.argv[2:])
-        app.run()
+        app.start()
     except (KeyboardInterrupt, SystemExit):
-        app.exit()
+        app.stop()

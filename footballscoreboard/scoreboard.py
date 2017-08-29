@@ -5,15 +5,11 @@ from enum import Enum
 import json
 # Imports from external modules
 # Internal modules import
-from .masterclock import MasterClock
 
 
 class ScoreboardEventListener:
 
     def on_scoreboard_update(self, scoreboard):
-        raise NotImplementedError
-
-    def on_clock_update(self, entries, update_count, json_string):
         raise NotImplementedError
 
 
@@ -77,7 +73,6 @@ class Scoreboard(object):
                          ScoreboardEntry(Scoreboard.KEY_GAME_BALL_ON, 50),
                          ScoreboardEntry(Scoreboard.KEY_GAME_PHASE, Scoreboard.GamePhase.PRE_GAME)]
         self._event_listeners = []
-        self._plugins = []
         self._update_count = 0
         self._clock = clock
 
@@ -123,24 +118,8 @@ class Scoreboard(object):
         self._update_count += 1
         for listener in self._event_listeners:
             listener.on_scoreboard_update(self)
-        for plugin in self._plugins:
-            plugin.update(self)
         for entry in self._entries:
             entry.submit()
-
-    # MARK: Handling plugins
-
-    def add_plugin(self, plugin):
-        if not plugin.is_disabled():
-            self._plugins.append(plugin)
-
-    def start(self):
-        for plugin in self._plugins:
-            plugin.start(self)
-
-    def stop(self):
-        for plugin in self._plugins:
-            plugin.stop(self)
 
     # MARK: Event listeners
 

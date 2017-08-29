@@ -69,15 +69,15 @@ Page.prototype = {
     },
 
     receiveClockUpdate:function(payload) {
-        seconds = payload["seconds"]
-        minutes = payload["minutes"]
+        seconds = payload["seconds"];
+        minutes = payload["minutes"];
         $("#game_clock_minutes").html(this._formatNumber(minutes));
         $("#game_clock_seconds").html(this._formatNumber(seconds));
     },
 
     receiveTimeUpdate:function(payload) {
-        seconds = payload["seconds"]
-        minutes = payload["minutes"]
+        seconds = payload["seconds"];
+        minutes = payload["minutes"];
         $("#game_clock_minutes").html(this._formatNumber(minutes));
         $("#game_clock_seconds").html(this._formatNumber(seconds));
     },

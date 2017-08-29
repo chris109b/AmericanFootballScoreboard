@@ -6,60 +6,48 @@ import sys
 from .webserver import Webserver
 from .slave import Slave
 from .scoreboard import Scoreboard
-from .plugin import PluginRegistry
+from .pluingregistry import PluginRegistry
+from .pluginmager import PluginManager
 from .core import Core
 from .masterclock import MasterClock
 from .slaveclock import SlaveClock
-from plugins import *
 
 
 class App:
 
     def __init__(self):
+        self.__plugin_manager = None
+        self.__clock = None
         self.__scoreboard = None
         self.__webserver = None
         self.__web_client = None
 
     def initialize_master_mode(self):
-        self.__scoreboard = Scoreboard(MasterClock())
+        self.__clock = MasterClock()
+        self.__scoreboard = Scoreboard(self.__clock)
+        self.__plugin_manager = PluginManager(self.__scoreboard, self.__clock)
         self.__webserver = Webserver(self.__scoreboard, None)
 
     def initialize_slave_mode(self):
-        self.__scoreboard = Scoreboard(SlaveClock())
+        self.__clock = SlaveClock()
+        self.__scoreboard = Scoreboard(self.__clock)
         self.__web_client = Slave(self.__scoreboard)
 
     def load_plugins(self, args):
-        for argument in args:
-            self._load_one_plugin(argument)
+        if self.__plugin_manager is not None:
+            self.__plugin_manager.load_plugins(args)
 
-    def _load_one_plugin(self, argument):
-        try:
-            plugin_name, plugin_args_string = argument.split(":")
-        except ValueError:
-            plugin_name = argument
-            plugin_args_string = None
-        if plugin_name is not None:
-            plugin_args_list = None
-            if plugin_args_string is not None:
-                try:
-                    plugin_args_list = plugin_args_string.split(";")
-                except ValueError:
-                    plugin_args_list = [plugin_args_string]
-            plugin = PluginRegistry.load_plugin(plugin_name, plugin_args_list)
-            if plugin is not None:
-                self.__scoreboard.add_plugin(plugin)
-
-    def run(self):
-        if self.__scoreboard is not None:
-            self.__scoreboard.start()
+    def start(self):
+        if self.__plugin_manager is not None:
+            self.__plugin_manager.start()
         if self.__webserver is not None:
             self.__webserver.start()
         if self.__web_client is not None:
             self.__web_client.start()
 
-    def exit(self):
-        if self.__scoreboard is not None:
-            self.__scoreboard.stop()
+    def stop(self):
+        if self.__plugin_manager is not None:
+            self.__plugin_manager.stop()
         if self.__webserver is not None:
             self.__webserver.stop()
         if self.__web_client is not None:
@@ -103,4 +91,3 @@ class App:
               "\n  TestPlugin:Test1;2;3;4")
 
         PluginRegistry.print_help()
-

@@ -13,13 +13,14 @@ from .scoreboard import Scoreboard
 
 class Slave:
 
-    def __init__(self, scoreboard):
+    def __init__(self, scoreboard, clock):
         # Application info
         self.__vendor_name = 'Christian Beuschel'
         self.__product_name = 'American Football Scoreboard'
         self.__version_string = '0.1'
         # Other parts of the application
         self.__scoreboard = scoreboard
+        self.__clock = clock
         # Actual network services
         self.__zeroconf_browser = None
         self.__websocket_client = None
@@ -109,10 +110,16 @@ class Slave:
         self.__scoreboard.submit()
 
     def receive_clock_update(self, payload):
-        pass
+        seconds = payload["seconds"]
+        minutes = payload["minutes"]
+        mode = payload["mode"]
+        is_ticking = payload["is_ticking"]
+        self.__clock.update_clock_settings(mode, is_ticking, minutes, seconds)
 
     def receive_time_update(self, payload):
-        pass
+        seconds = int(payload["seconds"])
+        minutes = int(payload["minutes"])
+        self.__clock.update_time(minutes, seconds)
 
     def process_json_data(self, data):
         data = json.loads(data)

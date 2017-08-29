@@ -73,7 +73,8 @@ class CommandLib:
         clock = webserver.get_scoreboard().get_clock()
         clock.stop()
 
-class ClockControlHandler(tornado.websocket.WebSocketHandler, ClockEventListener):
+
+class WebsocketHandler(tornado.websocket.WebSocketHandler, ClockEventListener):
 
     # MARK: Websocket live cycle
 

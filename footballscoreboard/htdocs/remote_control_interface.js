@@ -102,10 +102,10 @@ Page.prototype = {
     },
 
     receiveClockUpdate:function(payload) {
-        seconds = payload["seconds"]
-        minutes = payload["minutes"]
-        mode = payload["mode"]
-        is_ticking = payload["is_ticking"]
+        seconds = payload["seconds"];
+        minutes = payload["minutes"];
+        mode = payload["mode"];
+        is_ticking = payload["is_ticking"];
 
         $("#minutes").html(minutes);
         $("#seconds").html(seconds);
@@ -117,18 +117,18 @@ Page.prototype = {
         }).prop('selected', true);
 
         if (is_ticking == true) {
-            $("#ClockOperationTime").removeClass("Stopped")
-            $("#ClockOperationTime").addClass("Ticking")
+            $("#ClockOperationTime").removeClass("Stopped");
+            $("#ClockOperationTime").addClass("Ticking");
         }
         else {
-            $("#ClockOperationTime").removeClass("Ticking")
-            $("#ClockOperationTime").addClass("Stopped")
+            $("#ClockOperationTime").removeClass("Ticking");
+            $("#ClockOperationTime").addClass("Stopped");
         }
     },
 
     receiveTimeUpdate:function(payload) {
-        seconds = payload["seconds"]
-        minutes = payload["minutes"]
+        seconds = payload["seconds"];
+        minutes = payload["minutes"];
         $("#minutes").html(minutes);
         $("#seconds").html(seconds);
     },
@@ -151,11 +151,11 @@ Page.prototype = {
     },
 
     showClockOperationArea:function() {
-        $("#ClockOperationArea").removeClass("HiddenScreen")
+        $("#ClockOperationArea").removeClass("HiddenScreen");
     },
 
     hideClockOperationArea:function() {
-        $("#ClockOperationArea").addClass("HiddenScreen")
+        $("#ClockOperationArea").addClass("HiddenScreen");
     },
 
     showClockSettingsArea:function() {
@@ -209,8 +209,8 @@ Page.prototype = {
     },
 
     _readParametersOfForm:function(formId) {
-        parameters = {}
-        form_data = $(formId).serializeArray()
+        parameters = {};
+        form_data = $(formId).serializeArray();
         for (index in form_data) {
             object = form_data[index];
             parameters[object.name] = object.value;
