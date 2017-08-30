@@ -12,17 +12,21 @@ from .core import Core
 
 class Webserver(object):
 
-    def __init__(self, scoreboard, ssl_cert_path):
+    def __init__(self, scoreboard, display_list, ssl_cert_path):
         # Server configuration
         self.__ssl_cert_path = ssl_cert_path
         # Other parts of the application
         self.__scoreboard = scoreboard
+        self.__display_list = display_list
         # Actual network services
         self.__service_manager = None
         self.__web_service = None
 
     def get_scoreboard(self):
         return self.__scoreboard
+
+    def get_display_list(self):
+        return self.__display_list
 
     def log(self, message):
         print(message)

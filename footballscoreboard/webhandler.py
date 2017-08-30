@@ -3,6 +3,7 @@
 # Python standard library imports
 import urllib
 import os
+import json
 # Imports from external modules
 from tornado.web import *
 from tornado import gen
@@ -112,11 +113,33 @@ class DefaultHandler(tornado.web.RequestHandler):
         self.set_header("Content-Type", Core.DATA_MIME_TYPE)
         self.write(json_data)
         self.finish()
+
+    @gen.engine
+    def send_display_list_json_data(self):
+        display_list = self.__webserver.get_display_list()
+        json_data = json.dumps(display_list.get_all_display_ids())
+        self.set_header("Content-Type", Core.DATA_MIME_TYPE)
+        self.write(json_data)
+        self.finish()
+
+    @gen.engine
+    def send_appearance_list_json_data(self):
+        display_list = self.__webserver.get_display_list()
+        json_data = json.dumps(display_list.get_all_appearances())
+        self.set_header("Content-Type", Core.DATA_MIME_TYPE)
+        self.write(json_data)
+        self.finish()
                 
     def send_reply(self):
         path = self.request.path
         if path == "/":
             path = "/index.html"
+        if path == Core.DISPLAY_LIST_PATH:
+            self.send_display_list_json_data()
+            return
+        if path == Core.APPEARANCE_LIST_PATH:
+            self.send_appearance_list_json_data()
+            return
         if path == Core.INITIAL_DATA_PATH:
             self.send_display_json_data()
             return

@@ -27,7 +27,7 @@ class MasterClock(Clock):
                     self._minutes += 1
                     self._seconds = (time_delta - 1)
             elif self._mode == self.ClockMode.DECREMENTING:
-                if (self._seconds - time_delta) > 0:
+                if (self._seconds - time_delta) >= 0:
                     self._seconds -= time_delta
                 else:
                     if self._minutes > 0:

@@ -26,7 +26,7 @@ class Clock:
     def __init__(self):
         self._mode = self.ClockMode.DECREMENTING
         self._is_ticking = False
-        self._minutes = 0
+        self._minutes = 12
         self._seconds = 0
         self._event_listeners = []
 

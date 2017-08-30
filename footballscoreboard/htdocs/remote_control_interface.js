@@ -107,10 +107,10 @@ Page.prototype = {
         mode = payload["mode"];
         is_ticking = payload["is_ticking"];
 
-        $("#minutes").html(minutes);
-        $("#seconds").html(seconds);
-        $("#clock_minutes").val(minutes);
-        $("#clock_seconds").val(seconds);
+        $("#minutes").html(this._formatNumber(minutes));
+        $("#seconds").html(this._formatNumber(seconds));
+        $("#clock_minutes").val(this._formatNumber(minutes));
+        $("#clock_seconds").val(this._formatNumber(seconds));
 
         $("#clock_mode option").filter(function() {
             return $(this).text() == mode;
@@ -129,8 +129,8 @@ Page.prototype = {
     receiveTimeUpdate:function(payload) {
         seconds = payload["seconds"];
         minutes = payload["minutes"];
-        $("#minutes").html(minutes);
-        $("#seconds").html(seconds);
+        $("#minutes").html(this._formatNumber(minutes));
+        $("#seconds").html(this._formatNumber(seconds));
     },
 
     receiveData:function(data) {
@@ -206,6 +206,16 @@ Page.prototype = {
     sendStopClock:function() {
         command = new Command('stop_clock', {});
         this.websocket.send(command.jsonString());
+    },
+
+    _formatNumber:function(value) {
+        if (value < 10) {
+            formattedValue = "0" + value;
+        }
+        else {
+            formattedValue = "" + value;
+        }
+        return formattedValue;
     },
 
     _readParametersOfForm:function(formId) {

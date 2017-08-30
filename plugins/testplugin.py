@@ -33,7 +33,7 @@ class TestPlugin(Plugin):
         self.print_entries(scoreboard.get_changed_entries())
 
     def time_update(self, minute, second):
-        self.print("Time update: {0:02d}:{1:02d}".format(minute, second))
+        print("Time update: {0:02d}:{1:02d}".format(minute, second))
 
     def stop(self, scoreboard, clock):
         print("{0} stopped".format(TestPlugin.NAME))

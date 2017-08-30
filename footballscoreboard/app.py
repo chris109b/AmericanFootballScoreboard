@@ -11,7 +11,7 @@ from .pluginmager import PluginManager
 from .core import Core
 from .masterclock import MasterClock
 from .slaveclock import SlaveClock
-
+from .displaylist import DisplayList
 
 class App:
 
@@ -21,12 +21,14 @@ class App:
         self.__scoreboard = None
         self.__webserver = None
         self.__web_client = None
+        self.__display_list = None
 
     def initialize_master_mode(self):
         self.__clock = MasterClock()
         self.__scoreboard = Scoreboard(self.__clock)
+        self.__display_list = DisplayList()
         self.__plugin_manager = PluginManager(self.__scoreboard, self.__clock)
-        self.__webserver = Webserver(self.__scoreboard, None)
+        self.__webserver = Webserver(self.__scoreboard, self.__display_list, None)
 
     def initialize_slave_mode(self):
         self.__clock = SlaveClock()

@@ -17,6 +17,8 @@ class Event(Enum):
     CLOCK_UPDATE = "clock_update"
     TIME_UPDATE = "time_update"
     SCOREBOARD_UPDATE = "scoreboard_update"
+    SHOW_IDENTIFICATION = "show_identification"
+    CHANGE_APPEARANCE = "change_appearance"
 
 
 class CommandLib:
@@ -73,6 +75,17 @@ class CommandLib:
         clock = webserver.get_scoreboard().get_clock()
         clock.stop()
 
+    @classmethod
+    def register_display(cls, parameters, websocket_handler, webserver):
+        display_list = webserver.get_display_list()
+        display_list.add_display(websocket_handler)
+
+    @classmethod
+    def change_display_appearance(cls, parameters, websocket_handler, webserver):
+        display_list = webserver.get_display_list()
+        appearance_id = parameters['appearance_id']
+        display_list.set_appearance(websocket_handler, appearance_id)
+
 
 class WebsocketHandler(tornado.websocket.WebSocketHandler, ClockEventListener):
 
@@ -105,7 +118,19 @@ class WebsocketHandler(tornado.websocket.WebSocketHandler, ClockEventListener):
         scoreboard.remove_listener(self)
         clock = self.__webserver.get_scoreboard().get_clock()
         clock.remove_listener(self)
+        display_list = self.__webserver.get_display_list()
+        display_list.remove_display(self)
         print("Socket closed")
+
+    # MARK: Display functions
+
+    def show_identification(self, id_string):
+        message = '{"event": "%s", "data": {"id_string": %s}}' % (Event.SHOW_IDENTIFICATION.value, id_string)
+        self.write_message(message)
+
+    def change_appearance(self, appearance_id):
+        message = '{"event": "%s", "data": {"appearance_id": %s}}' % (Event.CHANGE_APPEARANCE.value, appearance_id)
+        self.write_message(message)
 
     # MARK:  GameClockEventListener
 
