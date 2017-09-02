@@ -11,7 +11,6 @@ class Core:
     KEY_API_WEBSOCKET_PATH = 'api_websocket_path'
 
     DISPLAY_LIST_PATH = "/display-list.json"
-    APPEARANCE_LIST_PATH = "/appearance-list.json"
     INITIAL_DATA_PATH = "/display.json"
     WEBSOCKET_PATH = "/websocket"
 

@@ -3,7 +3,6 @@
 # Python standard library imports
 import urllib
 import os
-import json
 # Imports from external modules
 from tornado.web import *
 from tornado import gen
@@ -29,7 +28,9 @@ class DefaultHandler(tornado.web.RequestHandler):
                 "/css/remote.css": ("remote.css", "text/css"),
                 "/css/remote_control_interface.css": ("remote_control_interface.css", "text/css"),
                 "/css/display_american_football.css": ("display_american_football.css", "text/css"),
+                "/img/display_american_football.png": ("display_american_football.png", "image/png"),
                 "/css/display_simple.css": ("display_simple.css", "text/css"),
+                "/img/display_simple.png": ("display_simple.png", "image/png"),
                 "/favicon.ico": ("favicon.ico", "image/x-icon"),
                 "/favicons/57.png": ("favicon_57.png", "image/png"),
                 "/favicons/72.png": ("favicon_72.png", "image/png"),
@@ -106,7 +107,6 @@ class DefaultHandler(tornado.web.RequestHandler):
                     clock_seconds=clock.get_seconds(),
                     clock_is_ticking=clock.is_ticking())
 
-    @gen.engine
     def send_display_json_data(self):
         scoreboard = self.__webserver.get_scoreboard()
         json_data = scoreboard.get_json_string()
@@ -114,18 +114,9 @@ class DefaultHandler(tornado.web.RequestHandler):
         self.write(json_data)
         self.finish()
 
-    @gen.engine
     def send_display_list_json_data(self):
         display_list = self.__webserver.get_display_list()
-        json_data = json.dumps(display_list.get_all_display_ids())
-        self.set_header("Content-Type", Core.DATA_MIME_TYPE)
-        self.write(json_data)
-        self.finish()
-
-    @gen.engine
-    def send_appearance_list_json_data(self):
-        display_list = self.__webserver.get_display_list()
-        json_data = json.dumps(display_list.get_all_appearances())
+        json_data = display_list.get_json_data()
         self.set_header("Content-Type", Core.DATA_MIME_TYPE)
         self.write(json_data)
         self.finish()
@@ -136,9 +127,6 @@ class DefaultHandler(tornado.web.RequestHandler):
             path = "/index.html"
         if path == Core.DISPLAY_LIST_PATH:
             self.send_display_list_json_data()
-            return
-        if path == Core.APPEARANCE_LIST_PATH:
-            self.send_appearance_list_json_data()
             return
         if path == Core.INITIAL_DATA_PATH:
             self.send_display_json_data()

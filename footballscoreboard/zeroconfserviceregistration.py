@@ -6,7 +6,7 @@ import subprocess
 from enum import Enum
 # Imports from external modules
 import netifaces
-from zeroconf import ServiceInfo, Zeroconf
+from zeroconf import ServiceInfo, Zeroconf, NonUniqueNameException
 
 
 class ZeroConfServiceRegistration:
@@ -17,22 +17,6 @@ class ZeroConfServiceRegistration:
     def __init__(self):
         self._service_list = []
         self._zeroconf = Zeroconf()
-
-    def _get_unique_name(self, name):
-        name_candidate = None
-        for index in range(0, 9999):
-            if index == 0:
-                name_candidate = name
-            else:
-                name_candidate = "{} ({})".format(name, index)
-            name_already_exists = False
-            for _, service_name, _, _, _ in self._service_list:
-                if name_candidate == service_name:
-                    name_already_exists = True
-                    break
-            if name_already_exists is False:
-                break
-        return name_candidate
 
     @classmethod
     def _get_network_interfaces(cls):
@@ -69,13 +53,20 @@ class ZeroConfServiceRegistration:
         hostname = ZeroConfServiceRegistration._get_hostname()
         network_interface_list = ZeroConfServiceRegistration._get_network_interfaces()
         for interface_name, ip_address in network_interface_list:
-            service_name = self._get_unique_name(service_name)
-            info = ServiceInfo(service_type.value,
-                               service_name + "." + service_type.value,
-                               socket.inet_aton(ip_address), port, 0, 0,
-                               description, hostname)
+            info = None
+            for index in range(0, 9999):
+                name_candidate = service_name if index == 0 else "{} ({})".format(service_name, index)
+                info = ServiceInfo(service_type.value,
+                                   name_candidate + "." + service_type.value,
+                                   socket.inet_aton(ip_address), port, 0, 0,
+                                   description, hostname)
+                try:
+                    self._zeroconf.register_service(info)
+                except NonUniqueNameException:
+                    print("Service name is used:", name_candidate + "." + service_type.value)
+                else:
+                    break
             self._service_list.append((service_type, service_name, ip_address, port, info))
-            self._zeroconf.register_service(info)
         return port
 
     def remove_service(self, port_to_remove):

@@ -43,6 +43,21 @@ div.ContentFrame {
     left: 50%;
 }
 
+div.DisplayIdentity {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1000px;
+    padding-top: 80px;
+    font-size: 8000%;
+    text-align: center;
+    background-color: white;
+    color: black;
+    z-index: 1000;
+    opacity: 0.9;
+}
+
 div.Content{
     background-color: black;
     width: 100%;

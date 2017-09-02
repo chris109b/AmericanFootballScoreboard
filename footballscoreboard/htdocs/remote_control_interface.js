@@ -49,6 +49,16 @@ Page.prototype = {
         $("#ShowClockButton").on( "click", function() {
             context.showClockOperationArea();
         });
+        $("#ShowDisplaySelectionButton").on( "click", function() {
+            context.openDisplaySelectionArea();
+        });
+
+        $("#DisplaySelectionAreaBackButton").on( "click", function() {
+            context.hideDisplaySelectionArea();
+        });
+        $("#AppearanceSelectionAreaBackButton").on( "click", function() {
+            context.hideAppearanceSelectionArea();
+        });
 
         $("#ClockOperationAreaBackButton").on( "click", function() {
             context.hideClockOperationArea();
@@ -160,12 +170,77 @@ Page.prototype = {
 
     showClockSettingsArea:function() {
         $("#clock_minutes").val($("#minutes").html());
-        $("#clock_seconds").val($("#minutes").html());
+        $("#clock_seconds").val($("#seconds").html());
         $("#ClockSettingsArea").removeClass("HiddenScreen");
     },
 
     hideClockSettingsArea:function() {
         $("#ClockSettingsArea").addClass("HiddenScreen");
+    },
+
+    openDisplaySelectionArea:function() {
+        context = this;
+        $.get("/display-list.json", function(data, status) {
+            if (status == 'success') {
+                $("#DisplayList").html("");
+                for (displayId in data["display_list"]) {
+                    html = '<div class="DisplayTile">' + displayId +'</div>\n';
+                    $("#DisplayList").append(html);
+                }
+                $("#AppearanceList").html("");
+                for (appearanceKey in data["appearance_dict"]) {
+                    appearanceName = data["appearance_dict"][appearanceKey];
+                    html = '<div class="AppearanceTile" name="'+ appearanceKey +
+                           '" style="background-image: url(/img/' + appearanceKey + '.png);">' +
+                           '<div class="AppearanceTileTitle">' +
+                           appearanceName +
+                           '</div></div>\n';
+                    $("#AppearanceList").append(html);
+                }
+                setTimeout(function() {
+                    $(".DisplayTile").on( "click", function() {
+                        context.openAppearanceSelectionAreaFor(this);
+                    });
+                    $(".AppearanceTile").on( "click", function() {
+                        context.changeDisplayAppearance(this);
+                    });
+                }, 100);
+                context.showDisplaySelectionArea();
+                context.sendIdentifyAllDisplays();
+            }
+            else {
+                console.log("Error (Status:"  + status + ")\n Data: " + data + "\n");
+            }
+        });
+    },
+
+    showDisplaySelectionArea:function() {
+        $("#DisplaySelectionArea").removeClass("HiddenScreen");
+    },
+
+    hideDisplaySelectionArea:function() {
+        $("#DisplaySelectionArea").addClass("HiddenScreen");
+    },
+
+    openAppearanceSelectionAreaFor:function(tile) {
+        displayNumber = $(tile).html();
+        $("#DisplayNumber").html(displayNumber);
+        $("#AppearanceSelectionArea").removeClass("HiddenScreen");
+    },
+
+    showAppearanceSelectionArea:function() {
+        $("#AppearanceSelectionArea").removeClass("HiddenScreen");
+    },
+
+    hideAppearanceSelectionArea:function() {
+        $("#AppearanceSelectionArea").addClass("HiddenScreen");
+    },
+
+    changeDisplayAppearance:function(tile) {
+        displayNumber = $("#DisplayNumber").html();
+        appearanceKey = $(tile).attr("name");
+        this.sendChangeDisplayAppearance(displayNumber, appearanceKey);
+        this.hideAppearanceSelectionArea();
     },
 
     submitScoreboardForm:function() {
@@ -185,6 +260,17 @@ Page.prototype = {
 
     sendUpdateScoreboard:function(parameters) {
         command = new Command('update_scoreboard', parameters);
+        this.websocket.send(command.jsonString());
+    },
+
+    sendIdentifyAllDisplays:function() {
+        command = new Command('identify_all_displays', {});
+        this.websocket.send(command.jsonString());
+    },
+
+    sendChangeDisplayAppearance:function(displayNumber, appearanceKey) {
+        command = new Command('change_display_appearance', {"appearance_id": appearanceKey,
+                                                            "display_id": displayNumber});
         this.websocket.send(command.jsonString());
     },
 

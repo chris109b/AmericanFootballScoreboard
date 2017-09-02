@@ -78,13 +78,21 @@ class CommandLib:
     @classmethod
     def register_display(cls, parameters, websocket_handler, webserver):
         display_list = webserver.get_display_list()
-        display_list.add_display(websocket_handler)
+        display_id = parameters.get('display_id', None)
+        display_list.add_display(websocket_handler, display_id)
 
     @classmethod
     def change_display_appearance(cls, parameters, websocket_handler, webserver):
         display_list = webserver.get_display_list()
         appearance_id = parameters['appearance_id']
-        display_list.set_appearance(websocket_handler, appearance_id)
+        display_id = parameters['display_id']
+        display_list.set_appearance(display_id, appearance_id)
+        print(__name__, parameters)
+
+    @classmethod
+    def identify_all_displays(cls, parameters, websocket_handler, webserver):
+        display_list = webserver.get_display_list()
+        display_list.show_all_display_identifications()
 
 
 class WebsocketHandler(tornado.websocket.WebSocketHandler, ClockEventListener):
@@ -128,8 +136,9 @@ class WebsocketHandler(tornado.websocket.WebSocketHandler, ClockEventListener):
         message = '{"event": "%s", "data": {"id_string": %s}}' % (Event.SHOW_IDENTIFICATION.value, id_string)
         self.write_message(message)
 
-    def change_appearance(self, appearance_id):
-        message = '{"event": "%s", "data": {"appearance_id": %s}}' % (Event.CHANGE_APPEARANCE.value, appearance_id)
+    def change_appearance(self, display_id, appearance_id):
+        message = '{"event": "%s", "data": {"display_id": "%s", "appearance_id": "%s"}}' % \
+                  (Event.CHANGE_APPEARANCE.value, display_id, appearance_id)
         self.write_message(message)
 
     # MARK:  GameClockEventListener

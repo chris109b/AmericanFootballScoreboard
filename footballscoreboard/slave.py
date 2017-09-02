@@ -33,7 +33,7 @@ class Slave:
         tornado.ioloop.IOLoop.instance().start()
 
     def stop(self):
-        self.__zeroconf_browser.start()
+        self.__zeroconf_browser.stop()
         if self.__websocket_client is not None:
             self.__websocket_client.disconnect()
 
@@ -56,15 +56,14 @@ class Slave:
 
     def on_did_update_service_list(self, browser):
         service_list = browser.get_service_list()
-        first_service = service_list[0]
         if len(service_list) == 0:
             if self.__websocket_client is not None:
                 self.__websocket_client.disconnect()
             self.__websocket_client = None
-        elif self.__master_service != first_service:
+        elif self.__master_service != service_list[0]:
             if self.__websocket_client is not None:
                 self.__websocket_client.disconnect()
-            self.__master_service = first_service
+            self.__master_service = service_list[0]
             ipv4_address = '.'.join(map(str, self.__master_service.address))
             port = self.__master_service.port
             initial_data_url = "http://{0}:{1}{2}".format(ipv4_address, port, Core.INITIAL_DATA_PATH)

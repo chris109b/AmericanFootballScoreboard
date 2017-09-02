@@ -58,6 +58,8 @@ div.Screen {
     transition: all 0.5s;
 }
 
+#DisplaySelectionArea,
+#AppearanceSelectionArea,
 #ClockSettingsArea,
 #ClockOperationArea {
     position: absolute;
@@ -71,12 +73,20 @@ div.HiddenScreen {
     z-index: 50;
 }
 
-#ClockSettingsArea {
+#DisplaySelectionArea {
+    z-index: 300;
+}
+
+#AppearanceSelectionArea {
     z-index: 400;
 }
 
+#ClockSettingsArea {
+    z-index: 600;
+}
+
 #ClockOperationArea {
-    z-index: 300;
+    z-index: 500;
 }
 
 div.NavigationBar {
@@ -331,4 +341,117 @@ div.ClockOperationFrame {
     margin: 0 auto;
     height: 100%;
     max-width: 640px;
+}
+
+div.DisplayList {
+    width: 100%;
+    padding-top: 72px;
+}
+
+div.DisplayTile {
+    cursor: pointer;
+    width: 33.3%;
+    padding: 15px 0px;
+    font-size: 500%;
+    text-align: center;
+}
+
+
+@media screen and (min-width: 480px) {
+    div.DisplayTile {
+        width: 25%;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    div.DisplayTile {
+        width: 20.0%;
+    }
+}
+
+@media screen and (min-width: 720px) {
+    div.DisplayTile {
+        width: 16.6%;
+    }
+}
+
+@media screen and (min-width: 840px) {
+    div.DisplayTile {
+        width: 14.2%;
+    }
+}
+
+@media screen and (min-width: 960px) {
+    div.DisplayTile {
+        width: 12.5%;
+    }
+}
+
+div.AppearanceList {
+    width: 100%;
+    padding-top: 52px;
+}
+
+div.AppearanceTile {
+    cursor: pointer;
+    width: 320px;
+    height: 180px;
+    background-size: 320px 180px;
+    background-repeat: no-repeat;
+    text-align: center;
+    background-color: blue;
+    float: none;
+    margin: 20px auto;
+    border: 1px solid white;
+}
+
+
+@media screen and (min-width: 480px) {
+    div.AppearanceTile {
+        width: 360px;
+        height: 202px;
+        background-size: 360px 202px;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    div.AppearanceTile {
+        width: 480px;
+        height: 270px;
+        background-size: 480px 270px;
+    }
+}
+
+@media screen and (min-width: 720px) {
+    div.AppearanceTile {
+        width: 600px;
+        height: 338px;
+        background-size: 600px 338px;
+    }
+}
+
+@media screen and (min-width: 840px) {
+    div.AppearanceTile {
+        width: 720px;
+        height: 405px;
+        background-size: 720px 405px;
+    }
+}
+
+@media screen and (min-width: 960px) {
+    div.AppearanceTile {
+        width: 840px;
+        height: 472px;
+        background-size: 840px 472px;
+    }
+}
+
+div.AppearanceTileTitle {
+    width: 100%;
+    padding: 10px 0px;
+    background: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    border-top: 1px solid white;
 }

@@ -146,6 +146,9 @@
                             <div class="ContentLine">
                                 <div id="ShowClockButton" class="FormButton">Show Clock</div>
                             </div>
+                            <div class="ContentLine">
+                                <div id="ShowDisplaySelectionButton" class="FormButton">Change Displays</div>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -159,6 +162,39 @@
                 </div>
                 <div id="ScoreboardFormAreaSubmitButton" class="NavigationBarSubmitButton">
                     Submit
+                </div>
+            </div>
+        </div>
+        <div id="DisplaySelectionArea" class="Screen HiddenScreen">
+            <div class="ScrollView">
+                <div class="Content">
+                    <div id="DisplayList" class="DisplayList">
+                    </div>
+                </div>
+            </div>
+            <div class="NavigationBar">
+                <div id="DisplaySelectionAreaBackButton" class="NavigationBarBackButton">
+                    Close
+                </div>
+                <div class="NavigationBarTitle">
+                    Select Display
+                </div>
+            </div>
+        </div>
+        <div id="AppearanceSelectionArea" class="Screen HiddenScreen">
+            <div class="ScrollView">
+                <div class="Content">
+                    <div id="AppearanceList" class="AppearanceList">
+                        <div class="DisplayTile" onclick="page.open"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="NavigationBar">
+                <div id="AppearanceSelectionAreaBackButton" class="NavigationBarBackButton">
+                    Cancel
+                </div>
+                <div class="NavigationBarTitle">
+                    Appearance of #<span id="DisplayNumber"></span>
                 </div>
             </div>
         </div>
