@@ -56,7 +56,10 @@ class App:
         print(message)
 
     def is_service_valid(self, info):
-        properties = Core.decode(info.properties)
+        try:
+            properties = Core.decode(info.properties)
+        except AttributeError:
+            return False
         try:
             if properties[Core.KEY_VENDOR_NAME] != Core.DESCRIPTION[Core.KEY_VENDOR_NAME]:
                 raise KeyError

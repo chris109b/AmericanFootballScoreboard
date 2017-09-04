@@ -14,8 +14,6 @@ from plugins import *
 class PluginManager(ScoreboardEventListener, ClockEventListener):
 
     def __init__(self, scoreboard, clock):
-        scoreboard.add_listener(self)
-        clock.add_listener(self)
         self.__scoreboard = scoreboard
         self.__clock = clock
         self.__plugins = []
