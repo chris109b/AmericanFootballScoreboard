@@ -2,23 +2,21 @@
 
 
 class Core:
-    KEY_VENDOR_NAME = 'vendor_name'
-    KEY_VENDOR_URI = 'vendor_uri'
-    KEY_PRODUCT_NAME = 'product_name'
-    KEY_PRODUCT_URI = 'product_uri'
-    KEY_PRODUCT_VERSION = 'product_version'
+    KEY_NET_APP_VENDOR_UUID = 'net_app_vendor_uuid'
+    KEY_NET_APP_META_PATH = 'net_app_info_path'
+    KEY_API_ID = 'api_id'
     KEY_API_INITIAL_DATA_PATH = 'api_initial_data_path'
     KEY_API_WEBSOCKET_PATH = 'api_websocket_path'
+
+    PRODUCT_NAME = 'American Football Scoreboard'
 
     DISPLAY_LIST_PATH = "/display-list.json"
     INITIAL_DATA_PATH = "/display.json"
     WEBSOCKET_PATH = "/websocket"
 
-    DESCRIPTION = {KEY_VENDOR_NAME: 'Christian Beuschel',
-                   KEY_VENDOR_URI: 'http://chris-macht-fotos.de',
-                   KEY_PRODUCT_NAME: 'American Football Scoreboard',
-                   KEY_PRODUCT_URI: 'http://chris-macht-fotos.de/products/american-football-scoreboard/',
-                   KEY_PRODUCT_VERSION: 'DEFAULT 0.1',
+    DESCRIPTION = {KEY_NET_APP_VENDOR_UUID: "chris109@web.de",
+                   KEY_NET_APP_META_PATH: "/netapp.json",
+                   KEY_API_ID: "Scoreboard 0.1",
                    KEY_API_INITIAL_DATA_PATH: INITIAL_DATA_PATH,
                    KEY_API_WEBSOCKET_PATH: WEBSOCKET_PATH}
 

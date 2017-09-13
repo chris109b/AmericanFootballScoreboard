@@ -24,6 +24,11 @@ class Event(Enum):
 class CommandLib:
 
     @classmethod
+    def get_scoreboard(cls, _, websocket_handler, webserver):
+        scoreboard = webserver.get_scoreboard()
+        websocket_handler.on_scoreboard_update(scoreboard)
+
+    @classmethod
     def get_clock(cls, _, websocket_handler, webserver):
         clock = webserver.get_scoreboard().get_clock()
         websocket_handler.on_clock_update(clock)

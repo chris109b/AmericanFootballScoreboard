@@ -72,7 +72,7 @@ class WebsocketClient:
         self.__delegate_ref().process_json_data(data)
 
     def _on_connection_success(self):
-        pass
+        self.send('{"command":"get_scoreboard","parameters":{}}')
 
     def _on_connection_close(self):
         pass
@@ -81,9 +81,6 @@ class WebsocketClient:
         raise exception
 
     def connect(self):
-        data = self._fetch_initial_data()
-        if data is not None:
-            self.__delegate_ref().process_json_data(data)
         self._open_websocket_connection()
 
     def send(self, data):

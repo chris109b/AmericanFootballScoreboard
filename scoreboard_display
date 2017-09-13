@@ -61,11 +61,9 @@ class App:
         except AttributeError:
             return False
         try:
-            if properties[Core.KEY_VENDOR_NAME] != Core.DESCRIPTION[Core.KEY_VENDOR_NAME]:
+            if properties[Core.KEY_NET_APP_VENDOR_UUID] != Core.DESCRIPTION[Core.KEY_NET_APP_VENDOR_UUID]:
                 raise KeyError
-            if properties[Core.KEY_PRODUCT_NAME] != Core.DESCRIPTION[Core.KEY_PRODUCT_NAME]:
-                raise KeyError
-            if properties[Core.KEY_PRODUCT_VERSION] != Core.DESCRIPTION[Core.KEY_PRODUCT_VERSION]:
+            if properties[Core.KEY_API_ID] != Core.DESCRIPTION[Core.KEY_API_ID]:
                 raise KeyError
         except KeyError:
             return False

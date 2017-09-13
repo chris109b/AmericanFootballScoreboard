@@ -35,7 +35,7 @@ class Webserver(object):
         # Publishing services
         self.__service_manager = ZeroConfServiceRegistration()
         port = self.__service_manager.register_service(ZeroConfServiceRegistration.ServiceType.HTTP,
-                                                       Core.DESCRIPTION[Core.KEY_PRODUCT_NAME],
+                                                       Core.PRODUCT_NAME,
                                                        description=Core.DESCRIPTION)
         self.__service_manager.print_service_urls()
         # Executing server

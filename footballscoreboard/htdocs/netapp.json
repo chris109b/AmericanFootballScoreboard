@@ -1,0 +1,22 @@
+{
+    "icon": {
+        "16" : "netapp_16.png",
+        "24" : "netapp_24.png",
+        "32" : "netapp_32.png",
+        "48" : "netapp_48.png",
+        "64" : "netapp_64.png",
+        "96" : "netapp_96.png",
+        "128": "netapp_128.png",
+        "192": "netapp_192.png"
+    },
+    "info": {
+        "app_name": "Scoreboard",
+        "app_description": "American Football Scoreboard",
+        "app_version" : "0.2",
+        "vendor_name": "Christian Beuschel",
+        "vendor_web_address" : "http://chris-macht-fotos.de",
+        "product_name" : "American Football Scoreboard OEM",
+        "product_web_address" : "http://chris-macht-fotos.de/products/american-football-scoreboard-oem.html",
+        "product_revision" : "0"
+    }
+}

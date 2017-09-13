@@ -14,10 +14,6 @@ from .scoreboard import Scoreboard
 class Slave:
 
     def __init__(self, scoreboard, clock):
-        # Application info
-        self.__vendor_name = 'Christian Beuschel'
-        self.__product_name = 'American Football Scoreboard'
-        self.__version_string = '0.1'
         # Other parts of the application
         self.__scoreboard = scoreboard
         self.__clock = clock
@@ -43,11 +39,9 @@ class Slave:
     def is_service_valid(self, info):
         properties = Core.decode(info.properties)
         try:
-            if properties[Core.KEY_VENDOR_NAME] != Core.DESCRIPTION[Core.KEY_VENDOR_NAME]:
+            if properties[Core.KEY_NET_APP_VENDOR_UUID] != Core.DESCRIPTION[Core.KEY_NET_APP_VENDOR_UUID]:
                 raise KeyError
-            if properties[Core.KEY_PRODUCT_NAME] != Core.DESCRIPTION[Core.KEY_PRODUCT_NAME]:
-                raise KeyError
-            if properties[Core.KEY_PRODUCT_VERSION] != Core.DESCRIPTION[Core.KEY_PRODUCT_VERSION]:
+            if properties[Core.KEY_API_ID] != Core.DESCRIPTION[Core.KEY_API_ID]:
                 raise KeyError
         except KeyError:
             return False

@@ -33,7 +33,8 @@ class App:
     def initialize_slave_mode(self):
         self.__clock = SlaveClock()
         self.__scoreboard = Scoreboard(self.__clock)
-        self.__web_client = Slave(self.__scoreboard)
+        self.__plugin_manager = PluginManager(self.__scoreboard, self.__clock)
+        self.__web_client = Slave(self.__scoreboard, self.__clock)
 
     def load_plugins(self, args):
         if self.__plugin_manager is not None:
